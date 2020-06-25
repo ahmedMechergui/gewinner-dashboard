@@ -1,11 +1,3 @@
-/*=========================================================================================
-    File Name: data-list-view.js
-    Description: List View
-    ----------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 
 $(document).ready(function() {
   "use strict"
@@ -29,21 +21,29 @@ $(document).ready(function() {
     select: {
       style: "multi"
     },
-    order: [[1, "asc"]],
+    /*
+    script line was initially sorting list elements by name , uncommenting the line below will bring
+    back that behavior
+    */
+    // order: [[1, "asc"]],
     bInfo: false,
     pageLength: 4,
+    /*
+    script was initially showing an " Add New " button to page , uncommenting the lines below well
+    show it back
+    */
     buttons: [
-      {
-        text: "<i class='feather icon-plus'></i> Add New",
-        action: function() {
-          $(this).removeClass("btn-secondary")
-          $(".add-new-data").addClass("show")
-          $(".overlay-bg").addClass("show")
-          $("#data-name, #data-price").val("")
-          $("#data-category, #data-status").prop("selectedIndex", 0)
-        },
-        className: "btn-outline-primary"
-      }
+      // {
+      //   text: "<i class='feather icon-plus'></i> Add New",
+      //   action: function() {
+      //     $(this).removeClass("btn-secondary")
+      //     $(".add-new-data").addClass("show")
+      //     $(".overlay-bg").addClass("show")
+      //     $("#data-name, #data-price").val("")
+      //     $("#data-category, #data-status").prop("selectedIndex", 0)
+      //   },
+      //   className: "btn-outline-primary"
+      // }
     ],
     initComplete: function(settings, json) {
       $(".dt-buttons .btn").removeClass("btn-secondary")
@@ -126,8 +126,8 @@ $(document).ready(function() {
   // On Edit
   $('.action-edit').on("click",function(e){
     e.stopPropagation();
-    $('#data-name').val('Altec Lansing - Bluetooth Speaker');
-    $('#data-price').val('$99');
+    // $('#data-name').val('Altec Lansing - Bluetooth Speaker');
+    // $('#data-price').val('$99');
     $(".add-new-data").addClass("show");
     $(".overlay-bg").addClass("show");
   });
