@@ -46,17 +46,19 @@ export class ScriptsLoaderService {
       scriptElement.src = path;
 
       scriptElement.onload = () => {
-        console.log('script resolved');
         resolve();
       };
-
       scriptElement.onerror = () => {
-        console.log('script rejected');
         reject();
       };
-
       window.document.body.appendChild(scriptElement);
     });
+  }
+
+  addManyScriptsAsync = async (...paths): Promise<void> => {
+    for (const path of paths) {
+      await this.addOneScriptAsync(path);
+    }
   }
 
   // Paths should from /assets folder
@@ -70,6 +72,7 @@ export class ScriptsLoaderService {
       window.document.head.appendChild(linkElement);
     });
   }
+
 
 }
 

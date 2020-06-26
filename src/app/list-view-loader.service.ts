@@ -17,19 +17,56 @@ export class ListViewLoaderService {
   }
 
 
-
   loadScripts(renderer2: Renderer2): void {
     this.scriptsLoaderService.addScripts(renderer2,
-      '/assets/vendors/js/extensions/dropzone.min.js',
-      '/assets/vendors/js/tables/datatable/datatables.min.js',
-      '/assets/vendors/js/tables/datatable/datatables.buttons.min.js',
-      '/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js',
-      '/assets/vendors/js/tables/datatable/buttons.bootstrap.min.js',
-      '/assets/vendors/js/tables/datatable/dataTables.select.min.js',
-      '/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js',
-      '/assets/js/scripts/ui/data-list-view.js'
+      // '/assets/vendors/js/extensions/dropzone.min.js',
+      // '/assets/vendors/js/tables/datatable/datatables.min.js',
+      // '/assets/vendors/js/tables/datatable/datatables.buttons.min.js',
+      // '/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js',
+      // '/assets/vendors/js/tables/datatable/buttons.bootstrap.min.js',
+      // '/assets/vendors/js/tables/datatable/dataTables.select.min.js',
+      // '/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js'
+      // '/assets/js/scripts/ui/data-list-view.js'
     );
   }
+
+  loadDataListViewScript = async (): Promise<void> => {
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/extensions/dropzone.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/dataTables.select.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.buttons.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/buttons.bootstrap.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js');
+    // await this.scriptsLoaderService.addOneScriptAsync('/assets/js/scripts/ui/data-list-view.js');
+    this.scriptsLoaderService.addManyScriptsAsync(
+      '/assets/vendors/js/extensions/dropzone.min.js',
+      '/assets/vendors/js/tables/datatable/datatables.min.js',
+      '/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js',
+      '/assets/vendors/js/tables/datatable/dataTables.select.min.js',
+      '/assets/vendors/js/tables/datatable/datatables.buttons.min.js',
+      '/assets/vendors/js/tables/datatable/buttons.bootstrap.min.js',
+      '/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js',
+      '/assets/js/scripts/ui/data-list-view.js'
+    ).then(() => {
+        const event = document.createEvent('Event');
+        event.initEvent('list-script-loaded', true, true);
+        console.log('event fired');
+        document.dispatchEvent(event);
+      }
+    );
+  }
+  // loadDataListViewScript(): void {
+  //
+  //   this.scriptsLoaderService.addOneScriptAsync('/assets/js/scripts/ui/data-list-view.js').then(
+  //     () => {
+  //       const event = document.createEvent('Event');
+  //       event.initEvent('list-script-loaded', true, true);
+  //       console.log('event fired');
+  //       document.dispatchEvent(event);
+  //     }
+  //   );
+  // }
 
 
   loadStylesheets(): void {

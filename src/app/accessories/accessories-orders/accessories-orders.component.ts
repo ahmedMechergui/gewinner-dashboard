@@ -44,6 +44,7 @@ export class AccessoriesOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadScripts(this.renderer2);
+    this.listViewLoaderService.loadDataListViewScript().then();
     this.ordersArray.reverse();
   }
 

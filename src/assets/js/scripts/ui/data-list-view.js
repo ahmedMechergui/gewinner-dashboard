@@ -1,6 +1,7 @@
 
-$(document).ready(function() {
+$(document).on('list-script-loaded' ,function() {
   "use strict"
+  console.log('script loaded');
   // init list view datatable
   var dataListView = $(".data-list-view").DataTable({
     responsive: false,
@@ -160,4 +161,5 @@ $(document).ready(function() {
   if (navigator.userAgent.indexOf("Mac OS X") != -1) {
     $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
   }
+  document.eventListeners('list-script-loaded').stopPropagation();
 })
