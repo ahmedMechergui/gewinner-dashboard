@@ -14,6 +14,7 @@ import {EmailsModule} from './modules/emails/emails.module';
 import {EventsModule} from './modules/events/events.module';
 import {AnalyticsModule} from './modules/analytics/analytics.module';
 import {AccessoriesModule} from './modules/accessories/accessories.module';
+import {MoovobrainModule} from './modules/moovobrain/moovobrain.module';
 
 // import { AccessoriesComponent } from './accessories/accessories.component';
 
@@ -23,7 +24,10 @@ import {AccessoriesModule} from './modules/accessories/accessories.module';
     MenuComponent,
     // AnalyticsComponent,
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
+    // MoovobrainComponent,
+    // MoovobrainOrdersComponent,
+    // MoovobrainTestsComponent,
     // AccessoriesOrdersComponent,
     // AccessoriesProductsComponent,
     // AccessoriesComponent
@@ -37,7 +41,8 @@ import {AccessoriesModule} from './modules/accessories/accessories.module';
     AnalyticsModule,
     EmailsModule,
     EventsModule,
-    AccessoriesModule
+    AccessoriesModule,
+    MoovobrainModule
   ],
   providers: [],
   bootstrap: [AppComponent]

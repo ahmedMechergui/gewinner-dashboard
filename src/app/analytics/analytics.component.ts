@@ -8,6 +8,7 @@ import {ScriptsLoaderService} from '../scripts-loader.service';
 })
 export class AnalyticsComponent implements OnInit {
 
+
   constructor(private scriptsLoaderService: ScriptsLoaderService, private renderer2: Renderer2) {
   }
 

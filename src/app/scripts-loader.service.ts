@@ -55,6 +55,8 @@ export class ScriptsLoaderService {
     });
   }
 
+  // Paths should from /assets folder
+  // example : /assets/js/myScript.js
   addManyScriptsAsync = async (...paths): Promise<void> => {
     for (const path of paths) {
       await this.addOneScriptAsync(path);

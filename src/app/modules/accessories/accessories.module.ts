@@ -1,10 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { AccessoriesRoutingModule } from './accessories-routing.module';
+import {AccessoriesRoutingModule} from './accessories-routing.module';
 import {AccessoriesComponent} from '../../accessories/accessories.component';
 import {AccessoriesProductsComponent} from '../../accessories/accessories-products/accessories-products.component';
 import {AccessoriesOrdersComponent} from '../../accessories/accessories-orders/accessories-orders.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 
 @NgModule({
@@ -15,7 +17,11 @@ import {AccessoriesOrdersComponent} from '../../accessories/accessories-orders/a
   ],
   imports: [
     CommonModule,
-    AccessoriesRoutingModule
+    AccessoriesRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgxDropzoneModule
   ]
 })
-export class AccessoriesModule { }
+export class AccessoriesModule {
+}

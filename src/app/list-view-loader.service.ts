@@ -31,14 +31,6 @@ export class ListViewLoaderService {
   }
 
   loadDataListViewScript = async (): Promise<void> => {
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/extensions/dropzone.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/dataTables.select.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.buttons.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/buttons.bootstrap.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/vendors/js/tables/datatable/datatables.checkboxes.min.js');
-    // await this.scriptsLoaderService.addOneScriptAsync('/assets/js/scripts/ui/data-list-view.js');
     this.scriptsLoaderService.addManyScriptsAsync(
       '/assets/vendors/js/extensions/dropzone.min.js',
       '/assets/vendors/js/tables/datatable/datatables.min.js',
@@ -55,7 +47,7 @@ export class ListViewLoaderService {
         document.dispatchEvent(event);
       }
     );
-  }
+  };
   // loadDataListViewScript(): void {
   //
   //   this.scriptsLoaderService.addOneScriptAsync('/assets/js/scripts/ui/data-list-view.js').then(

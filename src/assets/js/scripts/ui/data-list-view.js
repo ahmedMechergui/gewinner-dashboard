@@ -1,5 +1,5 @@
 
-$(document).on('list-script-loaded' ,function() {
+$(document).on('list-script-loaded' ,function(event) {
   "use strict"
   console.log('script loaded');
   // init list view datatable
@@ -18,7 +18,7 @@ $(document).on('list-script-loaded' ,function() {
       sLengthMenu: "_MENU_",
       sSearch: ""
     },
-    aLengthMenu: [[4, 10, 15, 20], [4, 10, 15, 20]],
+    aLengthMenu: [[10, 15, 20, 30], [10, 15, 20, 30]],
     select: {
       style: "multi"
     },
@@ -28,23 +28,23 @@ $(document).on('list-script-loaded' ,function() {
     */
     // order: [[1, "asc"]],
     bInfo: false,
-    pageLength: 4,
+    pageLength: 10,
     /*
     script was initially showing an " Add New " button to page , uncommenting the lines below well
     show it back
     */
     buttons: [
-      // {
-      //   text: "<i class='feather icon-plus'></i> Add New",
-      //   action: function() {
-      //     $(this).removeClass("btn-secondary")
-      //     $(".add-new-data").addClass("show")
-      //     $(".overlay-bg").addClass("show")
-      //     $("#data-name, #data-price").val("")
-      //     $("#data-category, #data-status").prop("selectedIndex", 0)
-      //   },
-      //   className: "btn-outline-primary"
-      // }
+      {
+        text: "<i class='feather icon-plus'></i> Add New",
+        action: function() {
+          $(this).removeClass("btn-secondary")
+          $(".add-new-data").addClass("show")
+          $(".overlay-bg").addClass("show")
+          $("#data-name, #data-price").val("")
+          $("#data-category, #data-status").prop("selectedIndex", 0)
+        },
+        className: "btn-outline-primary"
+      }
     ],
     initComplete: function(settings, json) {
       $(".dt-buttons .btn").removeClass("btn-secondary")
@@ -135,9 +135,10 @@ $(document).on('list-script-loaded' ,function() {
 
   // On Delete
   $('.action-delete').on("click", function(e){
-    e.stopPropagation();
+    // e.stopPropagation();
     $(this).closest('td').parent('tr').fadeOut();
   });
+
 
   // dropzone init
   Dropzone.options.dataListUpload = {
@@ -162,4 +163,6 @@ $(document).on('list-script-loaded' ,function() {
     $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
   }
   document.eventListeners('list-script-loaded').stopPropagation();
+
+
 })

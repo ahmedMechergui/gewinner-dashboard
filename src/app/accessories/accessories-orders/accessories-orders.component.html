@@ -40,9 +40,9 @@
                 Actions
               </button>
               <div class="dropdown-menu order-action-buttons">
-                <a class="dropdown-item"><i class="feather icon-check"></i>Confirm</a>
-                <a class="dropdown-item"><i class="feather icon-slash"></i>Reject</a>
-                <a class="dropdown-item"><i class="feather icon-trash"></i>Delete</a>
+                <a class="dropdown-item" (click)="ordersListManagementService.confirmSelectedOrders()"><i class="feather icon-check"></i>Confirm</a>
+                <a class="dropdown-item" (click)="ordersListManagementService.rejectSelectedOrders()"><i class="feather icon-slash"></i>Reject</a>
+                <a class="dropdown-item" (click)="ordersListManagementService.deleteSelectedOrders()"><i class="feather icon-trash"></i>Delete</a>
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let order of ordersArray">
+            <tr *ngFor="let order of ordersArray ; let i = index" [id]="'order-'+i">
               <td></td>
               <td class="product-name">{{order.name}}</td>
               <td class="product-category">{{order.client}}</td>
@@ -82,10 +82,10 @@
               <td class="product-category">{{order.quantity}}</td>
               <td class="product-price">{{order.price}}&nbsp;dt</td>
               <td class="product-action">
-                <span class="action-edit" title="More information"><i class="feather icon-eye"></i></span>&nbsp;
-                <span  title="Confirm order" data-toggle="modal" data-target="#success"><i class="feather icon-check"></i></span>&nbsp;
-                <span  title="Reject order"><i class="feather icon-slash"  data-toggle="modal" data-target="#danger"></i></span>&nbsp;
-                <span title="Delete order" data-toggle="modal" data-target="#danger-2"><i class="feather icon-trash"></i></span>
+                <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i class="feather icon-eye"></i></span>&nbsp;
+                <span title="Confirm order" data-toggle="modal" data-target="#success" (click)="selectedElementIndex = i"><i class="feather icon-check"></i></span>&nbsp;
+                <span title="Reject order"><i class="feather icon-slash"  data-toggle="modal" data-target="#danger" (click)="selectedElementIndex = i"></i></span>&nbsp;
+                <span title="Delete order" data-toggle="modal" data-target="#danger-2" (click)="selectedElementIndex = i"><i class="feather icon-trash"></i></span>
               </td>
             </tr>
             </tbody>
@@ -180,10 +180,10 @@
             </div>
             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
               <div class="add-data-btn">
-                <button class="btn btn-success">Confirm order</button>
+                <button class="btn btn-success" data-toggle="modal" data-target="#success">Confirm order</button>
               </div>
               <div class="cancel-data-btn">
-                <button class="btn btn-outline-danger">Reject order</button>
+                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#danger">Reject order</button>
               </div>
             </div>
           </div>
@@ -215,7 +215,7 @@
         him that he will be receiving his order soon and the order will be set as delivered.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">Confirm</button>
+        <button type="button" class="btn btn-primary waves-effect waves-light" (click)="ordersListManagementService.setOrderConfirmed(selectedElementIndex)" data-dismiss="modal">Confirm</button>
         <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -236,7 +236,7 @@
        Rejecting this order will send an e-mail to the client informing him that his order is rejected.
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal">Reject</button>
+        <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal" (click)="ordersListManagementService.setOrderRejected(selectedElementIndex)">Reject</button>
         <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -257,7 +257,7 @@
         Are you sure want to delete this order ?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal">Delete</button>
+        <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal" (click)="ordersListManagementService.deleteOrder(selectedElementIndex)">Delete</button>
         <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel</button>
       </div>
     </div>
