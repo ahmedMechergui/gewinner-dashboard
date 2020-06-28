@@ -73,6 +73,19 @@ table.dataTable thead .sorting_asc:first-of-type:after,
   top: 14px !important;
 }
 
+
+.text-large{
+  margin-bottom: 7px;
+  font-size: large;
+}
+
+.product-action i{
+  transition: 0.2s;
+}
+.product-action i:hover{
+  font-size: 17px;
+}
+
 ngx-dropzone {
   border: 2px dashed #7367F0 !important;
   background: #F8F8F8;
@@ -84,7 +97,7 @@ ngx-dropzone-label {
   font-size: 2rem;
   color: #7367F0;
 }
-/* a Download icon will be shown with upload images if you uncomment this code below */
+/* a Download icon will be shown with products upload images if you uncomment this code below */
 /*ngx-dropzone-label:before{*/
 /*  content: '\e864';*/
 /*  font-family: 'feather';*/

@@ -26,10 +26,16 @@ export class OrdersListManagementService {
     //  send update to server
   }
 
+  setTestRequestTested(selectedElementIndex): void {
+    this.ordersArray[selectedElementIndex].status = 'tested';
+    //  send update to server
+  }
+
   setOrderRejected(selectedElementIndex): void {
     this.ordersArray[selectedElementIndex].status = 'rejected';
     //  send update to server
   }
+
 
   // this function will return the ID's of the selected orders
   getSelectedOrdersIDs(): Array<number> {
@@ -54,6 +60,13 @@ export class OrdersListManagementService {
     const ordersIndexes = this.getSelectedOrdersIDs();
     ordersIndexes.forEach((orderIndex) => {
       this.ordersArray[orderIndex].status = 'delivered';
+    });
+  }
+
+  confirmSelectedTests(): void {
+    const ordersIndexes = this.getSelectedOrdersIDs();
+    ordersIndexes.forEach((orderIndex) => {
+      this.ordersArray[orderIndex].status = 'tested';
     });
   }
 

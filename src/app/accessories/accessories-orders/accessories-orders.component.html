@@ -58,6 +58,7 @@
               <th></th>
               <th>NAME</th>
               <th>CLIENT</th>
+              <th>ORDER DATE</th>
               <th>ORDER STATUS</th>
               <th>QUANTITY</th>
               <th>PRICE</th>
@@ -67,20 +68,21 @@
             <tbody>
             <tr *ngFor="let order of ordersArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-name">{{order.name}}</td>
-              <td class="product-category">{{order.client}}</td>
-              <td>
+              <td class="product-name action-edit" (click)="selectedElementIndex = i">{{order.name}}</td>
+              <td class="product-category action-edit" (click)="selectedElementIndex = i">{{order.client}}</td>
+              <td class="product-category action-edit" (click)="selectedElementIndex = i">{{order.date | date : 'fullDate'}}</td>
+              <td class="action-edit" (click)="selectedElementIndex = i">
                 <div class="chip chip-warning"
                      [class.chip-warning]="order.status === 'pending'"
                      [class.chip-danger]="order.status === 'rejected'"
                      [class.chip-success]="order.status === 'delivered'">
-                  <div class="chip-body">
+                  <div class="chip-body action-edit" >
                     <div class="chip-text">{{order.status}}</div>
                   </div>
                 </div>
               </td>
-              <td class="product-category">{{order.quantity}}</td>
-              <td class="product-price">{{order.price}}&nbsp;dt</td>
+              <td class="product-category action-edit" (click)="selectedElementIndex = i">{{order.quantity}}</td>
+              <td class="product-price action-edit" (click)="selectedElementIndex = i">{{order.price}}&nbsp;dt</td>
               <td class="product-action">
                 <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i class="feather icon-eye"></i></span>&nbsp;
                 <span title="Confirm order" data-toggle="modal" data-target="#success" (click)="selectedElementIndex = i"><i class="feather icon-check"></i></span>&nbsp;
@@ -138,7 +140,7 @@
                     <hr>
 
                     <label class="text-dark text-bold-600">Address</label>
-                    <p class="text-62">cite hana, tunisia, bizerta , 7000</p>
+                    <p class="text-62">Cite hana, Bizerte, Tunisia, 7000 </p>
                     <hr>
 
                     <label class="text-dark text-bold-600">Phone</label>
@@ -182,8 +184,14 @@
               <div class="add-data-btn">
                 <button class="btn btn-success" data-toggle="modal" data-target="#success">Confirm order</button>
               </div>
-              <div class="cancel-data-btn">
-                <button class="btn btn-outline-danger" data-toggle="modal" data-target="#danger">Reject order</button>
+<!--
+    uncommenting the line below and deleting the "div" under it
+    will make the sidebar get hidden when button is clicked
+-->
+
+<!--              <div class="cancel-data-btn">-->
+              <div>
+              <button class="btn btn-outline-danger" data-toggle="modal" data-target="#danger">Reject order</button>
               </div>
             </div>
           </div>

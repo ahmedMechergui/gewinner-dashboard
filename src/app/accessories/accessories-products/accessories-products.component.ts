@@ -11,12 +11,14 @@ import {FormControl, FormGroup} from '@angular/forms';
 export class AccessoriesProductsComponent implements OnInit {
   form: FormGroup;
   files: File[] = [];
+  quantityInputOldValue: string;
   quantityDisabled = false;
   selectedElementIndex: number;
   productsArray = [
     {
       imageURL: '/assets/images/elements/camera.jpg',
       name: 'Front HQ camera',
+      description: 'lorem ipsum dolor sit amet',
       price: 257,
       totalOrders: 78,
       ordersThisMonth: 17,
@@ -25,6 +27,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/adjustable table.jpg',
       name: 'Adjustable table',
+      description: 'lorem ipsum dolor sit amet',
       price: 182,
       totalOrders: 48,
       ordersThisMonth: 22,
@@ -33,6 +36,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/headrest.jpg',
       name: 'Headrest neck support',
+      description: 'lorem ipsum dolor sit amet',
       price: 135,
       totalOrders: 34,
       ordersThisMonth: 0,
@@ -41,6 +45,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/security-belt.jpg',
       name: 'Security belt',
+      description: 'lorem ipsum dolor sit amet',
       price: 70,
       totalOrders: 120,
       ordersThisMonth: 30,
@@ -50,6 +55,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/camera.jpg',
       name: 'Front HQ camera',
+      description: 'lorem ipsum dolor sit amet',
       price: 257,
       totalOrders: 78,
       ordersThisMonth: 17,
@@ -58,6 +64,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/adjustable table.jpg',
       name: 'Adjustable table',
+      description: 'lorem ipsum dolor sit amet',
       price: 182,
       totalOrders: 48,
       ordersThisMonth: 22,
@@ -66,6 +73,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/headrest.jpg',
       name: 'Headrest neck support',
+      description: 'lorem ipsum dolor sit amet',
       price: 135,
       totalOrders: 34,
       ordersThisMonth: 0,
@@ -74,6 +82,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/security-belt.jpg',
       name: 'Security belt',
+      description: 'lorem ipsum dolor sit amet',
       price: 70,
       totalOrders: 120,
       ordersThisMonth: 30,
@@ -82,6 +91,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/camera.jpg',
       name: 'Front HQ camera',
+      description: 'lorem ipsum dolor sit amet',
       price: 257,
       totalOrders: 78,
       ordersThisMonth: 17,
@@ -90,6 +100,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/adjustable table.jpg',
       name: 'Adjustable table',
+      description: 'lorem ipsum dolor sit amet',
       price: 182,
       totalOrders: 48,
       ordersThisMonth: 22,
@@ -98,6 +109,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/headrest.jpg',
       name: 'Headrest neck support',
+      description: 'lorem ipsum dolor sit amet',
       price: 135,
       totalOrders: 34,
       ordersThisMonth: 0,
@@ -106,6 +118,7 @@ export class AccessoriesProductsComponent implements OnInit {
     {
       imageURL: '/assets/images/elements/security-belt.jpg',
       name: 'Security belt',
+      description: 'lorem ipsum dolor sit amet',
       price: 70,
       totalOrders: 120,
       ordersThisMonth: 30,
@@ -141,17 +154,32 @@ export class AccessoriesProductsComponent implements OnInit {
       this.form.patchValue({prodQuantity: Infinity});
     } else {
       const quantity = (document.getElementById('product-quantity') as HTMLInputElement).value;
-      // this.form.get('prodQuantity').setValue(quantity);
       this.form.patchValue({prodQuantity: quantity});
     }
+    const values = this.form.value;
+    this.productsArray.push({
+      name: values.prodName,
+      imageURL: '/assets/images/elements/no-image.jpg',
+      description: values.prodDescription,
+      price: values.prodPrice,
+      available: values.prodQuantity,
+      totalOrders: 0,
+      ordersThisMonth: 0,
+    });
     console.log(this.form.value);
   }
 
   infinityQuantityClicked() {
+    const quantityInput = (document.getElementById('product-quantity') as HTMLInputElement);
     if (this.quantityDisabled) {
       document.getElementById('product-quantity').removeAttribute('disabled');
+      quantityInput.type = 'number';
+      quantityInput.value = this.quantityInputOldValue;
     } else {
-      document.getElementById('product-quantity').setAttribute('disabled', 'true');
+      quantityInput.type = 'text';
+      this.quantityInputOldValue = quantityInput.value;
+      quantityInput.value = 'Infinite';
+      quantityInput.setAttribute('disabled', 'true');
     }
     this.quantityDisabled = !this.quantityDisabled;
   }

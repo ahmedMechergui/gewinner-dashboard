@@ -1,6 +1,10 @@
 
+
 $(document).on('list-script-loaded' ,function(event) {
   "use strict"
+
+
+
   console.log('script loaded');
   // init list view datatable
   var dataListView = $(".data-list-view").DataTable({
@@ -59,6 +63,8 @@ $(document).on('list-script-loaded' ,function(event) {
     }, 50);
   });
 
+
+
   // init thumb view datatable
   var dataThumbView = $(".data-thumb-view").DataTable({
     responsive: false,
@@ -111,6 +117,7 @@ $(document).on('list-script-loaded' ,function(event) {
   actionDropdown.insertBefore($(".top .actions .dt-buttons"))
 
 
+
   // Scrollbar
   if ($(".data-items").length > 0) {
     new PerfectScrollbar(".data-items", { wheelPropagation: false })
@@ -140,23 +147,23 @@ $(document).on('list-script-loaded' ,function(event) {
   });
 
 
-  // dropzone init
-  Dropzone.options.dataListUpload = {
-    complete: function(files) {
-      var _this = this
-      // checks files in class dropzone and remove that files
-      $(".hide-data-sidebar, .cancel-data-btn, .actions .dt-buttons").on(
-        "click",
-        function() {
-          $(".dropzone")[0].dropzone.files.forEach(function(file) {
-            file.previewElement.remove()
-          })
-          $(".dropzone").removeClass("dz-started")
-        }
-      )
-    }
-  }
-  Dropzone.options.dataListUpload.complete()
+  // // dropzone init
+  // Dropzone.options.dataListUpload = {
+  //   complete: function(files) {
+  //     var _this = this
+  //     // checks files in class dropzone and remove that files
+  //     $(".hide-data-sidebar, .cancel-data-btn, .actions .dt-buttons").on(
+  //       "click",
+  //       function() {
+  //         $(".dropzone")[0].dropzone.files.forEach(function(file) {
+  //           file.previewElement.remove()
+  //         })
+  //         $(".dropzone").removeClass("dz-started")
+  //       }
+  //     )
+  //   }
+  // }
+  // Dropzone.options.dataListUpload.complete()
 
   // mac chrome checkbox fix
   if (navigator.userAgent.indexOf("Mac OS X") != -1) {
