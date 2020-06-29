@@ -1,4 +1,4 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
+import {AfterViewInit, Component, OnInit, Renderer2} from '@angular/core';
 import {ScriptsLoaderService} from '../scripts-loader.service';
 
 @Component({
@@ -6,7 +6,7 @@ import {ScriptsLoaderService} from '../scripts-loader.service';
   templateUrl: './analytics.component.html',
   styleUrls: ['./analytics.component.css']
 })
-export class AnalyticsComponent implements OnInit {
+export class AnalyticsComponent implements OnInit, AfterViewInit {
 
 
   constructor(private scriptsLoaderService: ScriptsLoaderService, private renderer2: Renderer2) {
@@ -14,6 +14,9 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadStylesheets();
+  }
+
+  ngAfterViewInit() {
     this.loadScripts();
   }
 

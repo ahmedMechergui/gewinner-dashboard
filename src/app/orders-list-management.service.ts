@@ -31,6 +31,11 @@ export class OrdersListManagementService {
     //  send update to server
   }
 
+  setJobRequestProcessed(selectedElementIndex): void {
+    this.ordersArray[selectedElementIndex].status = 'processed';
+    //  send update to server
+  }
+
   setOrderRejected(selectedElementIndex): void {
     this.ordersArray[selectedElementIndex].status = 'rejected';
     //  send update to server
@@ -67,6 +72,13 @@ export class OrdersListManagementService {
     const ordersIndexes = this.getSelectedOrdersIDs();
     ordersIndexes.forEach((orderIndex) => {
       this.ordersArray[orderIndex].status = 'tested';
+    });
+  }
+
+  markProcessedApplications(): void {
+    const ordersIndexes = this.getSelectedOrdersIDs();
+    ordersIndexes.forEach((orderIndex) => {
+      this.ordersArray[orderIndex].status = 'processed';
     });
   }
 
