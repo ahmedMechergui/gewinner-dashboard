@@ -1,11 +1,3 @@
-/*=========================================================================================
-    File Name: app-user.js
-    Description: User page
-    --------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
 $(document).ready(function () {
 
   var isRtl;
@@ -15,79 +7,20 @@ $(document).ready(function () {
     isRtl = false;
   }
 
-  //  Rendering badge in status column
-  var customBadgeHTML = function (params) {
-    var color = "";
-    if (params.value == "active") {
-      color = "success"
-      return "<div class='badge badge-pill badge-light-" + color + "' >" + params.value + "</div>"
-    } else if (params.value == "blocked") {
-      color = "danger";
-      return "<div class='badge badge-pill badge-light-" + color + "' >" + params.value + "</div>"
-    } else if (params.value == "deactivated") {
-      color = "warning";
-      return "<div class='badge badge-pill badge-light-" + color + "' >" + params.value + "</div>"
-    }
-  }
-
-  //  Rendering bullet in verified column
-  var customBulletHTML = function (params) {
-    var color = "";
-    if (params.value == true) {
-      color = "success"
-      return "<div class='bullet bullet-sm bullet-" + color + "' >" + "</div>"
-    } else if (params.value == false) {
-      color = "secondary";
-      return "<div class='bullet bullet-sm bullet-" + color + "' >" + "</div>"
-    }
-  }
 
   // Renering Icons in Actions column
-  var customIconsHTML = function (params) {
-    var usersIcons = document.createElement("span");
-    var editIconHTML = "<a href='app-user-edit.html'><i class= 'users-edit-icon feather icon-edit-1 mr-50'></i></a>"
-    var deleteIconHTML = document.createElement('i');
-    var attr = document.createAttribute("class")
-    attr.value = "users-delete-icon feather icon-trash-2"
-    deleteIconHTML.setAttributeNode(attr);
-    // selected row delete functionality
-    deleteIconHTML.addEventListener("click", function () {
-      deleteArr = [
-        params.data
-      ];
-      // var selectedData = gridOptions.api.getSelectedRows();
-      gridOptions.api.updateRowData({
-        remove: deleteArr
-      });
-    });
-    usersIcons.appendChild($.parseHTML(editIconHTML)[0]);
-    usersIcons.appendChild(deleteIconHTML);
-    return usersIcons
-  }
 
-  //  Rendering avatar in username column
-  var customAvatarHTML = function (params) {
-    return "<span class='avatar'><img src='" + params.data.avatar + "' height='32' width='32'></span>" + params.value
-  }
 
   // ag-grid
   /*** COLUMN DEFINE ***/
 
-  var columnDefs = [{
-      headerName: 'ID',
-      field: 'id',
-      width: 125,
-      filter: true,
-      checkboxSelection: true,
-      headerCheckboxSelectionFilteredOnly: true,
-      headerCheckboxSelection: true,
-    },
+  var columnDefs = [
     {
-      headerName: 'Username',
-      field: 'username',
+      headerName: 'Name',
+      field: 'name',
       filter: true,
       width: 175,
-      cellRenderer: customAvatarHTML,
+      // cellRenderer: customAvatarHTML,
     },
     {
       headerName: 'Email',
@@ -96,54 +29,28 @@ $(document).ready(function () {
       width: 225,
     },
     {
-      headerName: 'Name',
-      field: 'name',
-      filter: true,
-      width: 200,
-    },
-    {
       headerName: 'Country',
       field: 'country',
       filter: true,
       width: 150,
     },
     {
-      headerName: 'Role',
-      field: 'role',
+      headerName: 'Phone',
+      field: 'phone',
       filter: true,
       width: 150,
     },
     {
-      headerName: 'Status',
-      field: 'status',
+      headerName: 'Creation date',
+      field: 'creationDate',
       filter: true,
-      width: 150,
-      cellRenderer: customBadgeHTML,
-      cellStyle: {
-        "text-align": "center"
-      }
+      width: 200,
     },
     {
-      headerName: 'Verified',
-      field: 'is_verified',
+      headerName: 'Next control',
+      field: 'controlDate',
       filter: true,
-      width: 125,
-      cellRenderer: customBulletHTML,
-      cellStyle: {
-        "text-align": "center"
-      }
-    },
-    {
-      headerName: 'Department',
-      field: 'department',
-      filter: true,
-      width: 150,
-    },
-    {
-      headerName: 'Actions',
-      field: 'transactions',
-      width: 150,
-      cellRenderer: customIconsHTML,
+      width: 200,
     }
   ];
 
@@ -157,8 +64,8 @@ $(document).ready(function () {
     rowSelection: "multiple",
     floatingFilter: true,
     filter: true,
-    pagination: true,
-    paginationPageSize: 20,
+    pagination: false,
+    paginationPageSize: Infinity,
     pivotPanelShow: "always",
     colResizeDefault: "shift",
     animateRows: true,

@@ -17,10 +17,10 @@ import {ScriptsLoaderService} from '../scripts-loader.service';
 export class EmailsComponent implements OnInit {
 
   constructor(private scriptsLoaderService: ScriptsLoaderService, private renderer2: Renderer2) {
+    this.loadStylesheets();
   }
 
   ngOnInit(): void {
-    this.loadStylesheets();
     this.loadScripts();
   }
 

@@ -12,7 +12,7 @@
 }
 
 .product-img img{
-  height: 7.857rem;
+  height: 5.857rem;
   border-radius: 50%;
 }
 
@@ -102,3 +102,17 @@ ngx-dropzone-label {
 /*  content: '\e864';*/
 /*  font-family: 'feather';*/
 /*}*/
+
+
+
+/* =======================
+    # Clients list (table)
+   ======================= */
+
+.aggrid .ag-paging-panel .ag-paging-page-summary-panel {
+  display: none;
+}
+
+.aggrid .ag-paging-panel {
+  height: 21px !important;
+}

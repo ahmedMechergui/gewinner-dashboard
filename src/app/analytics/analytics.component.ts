@@ -22,8 +22,7 @@ export class AnalyticsComponent implements OnInit, AfterViewInit {
 
 
   loadScripts() {
-    this.scriptsLoaderService.addScripts(this.renderer2,
-      '/assets/vendors/js/charts/apexcharts.min.js',
+    this.scriptsLoaderService.addManyScriptsAsync('/assets/vendors/js/charts/apexcharts.min.js',
       '/assets/vendors/js/extensions/tether.min.js',
       '/assets/vendors/js/extensions/shepherd.min.js',
       '/assets/js/scripts/pages/dashboard-analytics.js'

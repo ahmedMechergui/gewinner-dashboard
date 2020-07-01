@@ -7,7 +7,9 @@ const routes: Routes = [
   {path: 'events', loadChildren: './modules/events/events.module#EventsModule'},
   {path: 'accessories', loadChildren: './modules/accessories/accessories.module#AccessoriesModule'},
   {path: 'moovobrain', loadChildren: './modules/moovobrain/moovobrain.module#MoovobrainModule'},
-  {path: 'join-us', loadChildren: './modules/job-internship/job-internship.module#JobInternshipModule'}
+  {path: 'join-us', loadChildren: './modules/job-internship/job-internship.module#JobInternshipModule'},
+  {path: 'clients', loadChildren: './modules/clients/clients.module#ClientsModule'},
+  {path : '**' , redirectTo : ''}
 ];
 
 @NgModule({

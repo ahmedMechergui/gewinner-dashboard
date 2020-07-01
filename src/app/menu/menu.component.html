@@ -19,10 +19,11 @@
 <!--      <li class=" nav-item"><a href="app-todo.html"><i class="feather icon-check-square"></i><span class="menu-title" data-i18n="Todo">Todo</span></a></li>-->
       <li class="nav-item" [routerLinkActive]="'active'"><a [routerLink]="'events'"><i class="feather icon-calendar"></i><span class="menu-title">Coming events</span></a></li>
 <!--      <li class="nav-item" [routerLinkActive]="'active'"><a [routerLink]="'accessories'"><i class="feather icon-box"></i><span class="menu-title">Accessories</span></a></li>-->
-      <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title">Accessories</span></a>
+
+      <li class=" nav-item"><a href="#"><i class="feather icon-users"></i><span class="menu-title">Clients</span></a>
         <ul class="menu-content">
-          <li  [routerLinkActive]="'active'" ><a [routerLink]="'accessories/products'"><i class="feather icon-circle"></i><span class="menu-item">Products</span></a></li>
-          <li [routerLinkActive]="'active'"><a [routerLink]="'accessories/orders'"><i class="feather icon-circle"></i><span class="menu-item">Orders</span></a></li>
+          <li  [routerLinkActive]="'active'" ><a [routerLink]="'clients/list'"><i class="feather icon-circle"></i><span class="menu-item">List</span></a></li>
+          <li [routerLinkActive]="'active'"><a [routerLink]="'clients/requests'"><i class="feather icon-circle"></i><span class="menu-item">Requests</span></a></li>
         </ul>
       </li>
 
@@ -32,6 +33,15 @@
           <li [routerLinkActive]="'active'"><a [routerLink]="'moovobrain/tests'"><i class="feather icon-circle"></i><span class="menu-item">Test requests</span></a></li>
         </ul>
       </li>
+
+      <li class=" nav-item"><a href="#"><i class="feather icon-box"></i><span class="menu-title">Accessories</span></a>
+        <ul class="menu-content">
+          <li  [routerLinkActive]="'active'" ><a [routerLink]="'accessories/products'"><i class="feather icon-circle"></i><span class="menu-item">Products</span></a></li>
+          <li [routerLinkActive]="'active'"><a [routerLink]="'accessories/orders'"><i class="feather icon-circle"></i><span class="menu-item">Orders</span></a></li>
+        </ul>
+      </li>
+
+
 
       <li class=" nav-item" [routerLinkActive]="'active'"><a [routerLink]="'join-us'"><i class="feather icon-clipboard"></i><span class="menu-title">Job | Internship</span></a></li>
 

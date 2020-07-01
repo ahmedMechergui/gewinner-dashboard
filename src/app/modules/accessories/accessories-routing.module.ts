@@ -5,9 +5,10 @@ import {AccessoriesProductsComponent} from '../../accessories/accessories-produc
 
 
 const routes: Routes = [
-  {path: ''  , redirectTo : 'orders' , pathMatch : 'full'},
   {path: 'orders', component: AccessoriesOrdersComponent},
-  {path: 'products', component: AccessoriesProductsComponent}
+  {path: 'products', component: AccessoriesProductsComponent},
+  {path: ''  , redirectTo : 'orders' , pathMatch : 'full'},
+  {path: '**'  , redirectTo : 'orders'}
 ];
 
 @NgModule({

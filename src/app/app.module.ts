@@ -14,6 +14,7 @@ import {AnalyticsModule} from './modules/analytics/analytics.module';
 import {AccessoriesModule} from './modules/accessories/accessories.module';
 import {MoovobrainModule} from './modules/moovobrain/moovobrain.module';
 import {JobInternshipModule} from './modules/job-internship/job-internship.module';
+import {ClientsModule} from './modules/clients/clients.module';
 
 
 @NgModule({
@@ -23,6 +24,9 @@ import {JobInternshipModule} from './modules/job-internship/job-internship.modul
     // AnalyticsComponent,
     HeaderComponent,
     FooterComponent,
+    // ClientsComponent,
+    // ClientsListComponent,
+    // ClientsRequestsComponent,
     // JobInternshipRequestComponent
     // MoovobrainComponent,
     // MoovobrainOrdersComponent,
@@ -42,7 +46,8 @@ import {JobInternshipModule} from './modules/job-internship/job-internship.modul
     EventsModule,
     AccessoriesModule,
     MoovobrainModule,
-    JobInternshipModule
+    JobInternshipModule,
+    ClientsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
