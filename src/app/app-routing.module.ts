@@ -9,6 +9,7 @@ const routes: Routes = [
   {path: 'moovobrain', loadChildren: './modules/moovobrain/moovobrain.module#MoovobrainModule'},
   {path: 'join-us', loadChildren: './modules/job-internship/job-internship.module#JobInternshipModule'},
   {path: 'clients', loadChildren: './modules/clients/clients.module#ClientsModule'},
+  {path: 'team', loadChildren: './modules/team-members/team-members.module#TeamMembersModule'},
   {path : '**' , redirectTo : ''}
 ];
 

@@ -15,6 +15,7 @@ import {AccessoriesModule} from './modules/accessories/accessories.module';
 import {MoovobrainModule} from './modules/moovobrain/moovobrain.module';
 import {JobInternshipModule} from './modules/job-internship/job-internship.module';
 import {ClientsModule} from './modules/clients/clients.module';
+import {TeamMembersModule} from './modules/team-members/team-members.module';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import {ClientsModule} from './modules/clients/clients.module';
     // AnalyticsComponent,
     HeaderComponent,
     FooterComponent,
+    // TeamMembersComponent,
     // ClientsComponent,
     // ClientsListComponent,
     // ClientsRequestsComponent,
@@ -47,7 +49,8 @@ import {ClientsModule} from './modules/clients/clients.module';
     AccessoriesModule,
     MoovobrainModule,
     JobInternshipModule,
-    ClientsModule
+    ClientsModule,
+    TeamMembersModule
   ],
   providers: [],
   bootstrap: [AppComponent]
