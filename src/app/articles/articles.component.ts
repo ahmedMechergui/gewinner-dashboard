@@ -1,14 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ListViewLoaderService} from '../list-view-loader.service';
 import {OrdersListManagementService} from '../orders-list-management.service';
+import {ScriptsLoaderService} from '../scripts-loader.service';
 
 @Component({
   selector: 'app-articles',
   templateUrl: './articles.component.html',
   styleUrls: ['./articles.component.css']
 })
-export class ArticlesComponent implements OnInit {
+export class ArticlesComponent implements OnInit, AfterViewInit {
 
 
   form: FormGroup;
@@ -114,6 +115,7 @@ export class ArticlesComponent implements OnInit {
   ];
 
   constructor(
+    private scriptsLoaderService: ScriptsLoaderService,
     private listViewLoaderService: ListViewLoaderService,
     public ordersListManagementService: OrdersListManagementService) {
   }
@@ -124,6 +126,29 @@ export class ArticlesComponent implements OnInit {
     this.articlesArray.reverse();
     this.ordersListManagementService.setOrdersArray(this.articlesArray);
     this.initForm();
+  }
+
+  ngAfterViewInit() {
+    this.loadQuillStylesheets();
+    this.loadQuillScripts();
+  }
+
+  loadQuillScripts(): void {
+    this.scriptsLoaderService.addManyScriptsAsync(
+      '/assets/vendors/js/editors/quill/katex.min.js',
+      '/assets/vendors/js/editors/quill/highlight.min.js',
+      '/assets/vendors/js/editors/quill/quill.min.js',
+      // Quill is initialized in this js file below
+      '/assets/js/scripts/pages/app-email.js'
+    ).then();
+  }
+
+  loadQuillStylesheets(): void {
+    this.scriptsLoaderService.addStylesheets(
+      '/assets/vendors/css/editors/quill/katex.min.css',
+      '/assets/vendors/css/editors/quill/monokai-sublime.min.css',
+      '/assets/vendors/css/editors/quill/quill.snow.css'
+    );
   }
 
 
@@ -150,7 +175,7 @@ export class ArticlesComponent implements OnInit {
   onSubmit(): void {
     const values = this.form.value;
     this.articlesArray.push({
-      title: values.memberName,
+      title: values.title,
       author: values.author,
       date: new Date(),
       image: '/assets/images/elements/no-image.jpg',
