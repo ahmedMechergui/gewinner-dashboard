@@ -25,6 +25,7 @@ import {TeamMembersModule} from './modules/team-members/team-members.module';
     // AnalyticsComponent,
     HeaderComponent,
     FooterComponent,
+    // ArticlesComponent,
     // TeamMembersComponent,
     // ClientsComponent,
     // ClientsListComponent,

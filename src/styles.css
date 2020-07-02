@@ -13,6 +13,8 @@
 
 .product-img img{
   height: 5.857rem;
+  width: 5.857rem;
+  object-fit: cover;
   border-radius: 50%;
 }
 
