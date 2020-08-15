@@ -21,4 +21,8 @@ export class MenuComponent implements OnInit, AfterViewInit {
   loadScripts() {
     this.scriptsLoaderService.addScripts(this.renderer2, '/assets/js/core/app.js');
   }
+
+  hey(): void {
+    console.log('hey you');
+  }
 }

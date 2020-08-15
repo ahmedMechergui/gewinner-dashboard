@@ -208,6 +208,21 @@
       <div class="modal-body">
         Confirming this order will send a confirmation e-mail to the client informing
         him that he will be receiving his order soon and the order will be set as delivered.
+        <br>
+        <br>
+        <div >
+          <div class="row">
+
+            <div class="col-6" style="padding-right: 5px">
+              <input type="number" class="form-control" placeholder="Shipping price">
+            </div>
+
+            <div class="col-6" style="padding-left: 5px">
+              <input type="number" class="form-control" placeholder="Taxes">
+            </div>
+
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary waves-effect waves-light" (click)="ordersListManagementService.setOrderConfirmed(selectedElementIndex)" data-dismiss="modal">Confirm</button>
