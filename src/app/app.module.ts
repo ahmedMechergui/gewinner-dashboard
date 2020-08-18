@@ -16,29 +16,21 @@ import {MoovobrainModule} from './modules/moovobrain/moovobrain.module';
 import {JobInternshipModule} from './modules/job-internship/job-internship.module';
 import {ClientsModule} from './modules/clients/clients.module';
 import {TeamMembersModule} from './modules/team-members/team-members.module';
+import {SignInModule} from './modules/sign-in/sign-in.module';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
+import {AuthInterceptor} from './shared/authentication/auth.interceptor';
+import {SharedComponentsModule} from './modules/shared-components/shared-components.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {ToastrModule} from 'ngx-toastr';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    // AnalyticsComponent,
     HeaderComponent,
-    FooterComponent,
-    // ArticlesComponent,
-    // TeamMembersComponent,
-    // ClientsComponent,
-    // ClientsListComponent,
-    // ClientsRequestsComponent,
-    // JobInternshipRequestComponent
-    // MoovobrainComponent,
-    // MoovobrainOrdersComponent,
-    // MoovobrainTestsComponent,
-    // AccessoriesOrdersComponent,
-    // AccessoriesProductsComponent,
-    // AccessoriesComponent
-    // EmailsComponent,
-    // ComingEventsComponent
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -51,9 +43,15 @@ import {TeamMembersModule} from './modules/team-members/team-members.module';
     MoovobrainModule,
     JobInternshipModule,
     ClientsModule,
-    TeamMembersModule
+    TeamMembersModule,
+    SignInModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    SharedComponentsModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

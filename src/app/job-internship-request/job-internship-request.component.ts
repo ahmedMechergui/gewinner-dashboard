@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../list-view-loader.service';
-import {OrdersListManagementService} from '../orders-list-management.service';
+import {JobInternshipRequestHttpService} from './job-internship-request-http.service';
+import {JoinUsApplication} from '../shared/models/join-us-application.model';
+import {HostUrlService} from '../shared/services/host-url.service';
+import {ToastService} from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-job-internship-request',
@@ -9,107 +12,59 @@ import {OrdersListManagementService} from '../orders-list-management.service';
 })
 export class JobInternshipRequestComponent implements OnInit {
 
-
+  url = this.urlService.url;
   selectedElementIndex = 0;
-  requestsArray = [
-    {
-      post: 'internship',
-      name: 'John Doe',
-      applyDate: new Date('2020-7-23'),
-      status: 'pending',
-      interviewDate: null,
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'job',
-      name: 'Mark Doe',
-      applyDate: new Date('2020-7-20'),
-      status: 'scheduled',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'internship',
-      name: 'Jack Doe',
-      applyDate: new Date('2020-6-13'),
-      status: 'processed',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'internship',
-      name: 'John Doe',
-      applyDate: new Date('2020-7-23'),
-      status: 'pending',
-      interviewDate: null,
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'job',
-      name: 'Mark Doe',
-      applyDate: new Date('2020-7-20'),
-      status: 'scheduled',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'internship',
-      name: 'Jack Doe',
-      applyDate: new Date('2020-6-13'),
-      status: 'processed',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'internship',
-      name: 'John Doe',
-      applyDate: new Date('2020-7-23'),
-      status: 'pending',
-      interviewDate: null,
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'job',
-      name: 'Mark Doe',
-      applyDate: new Date('2020-7-20'),
-      status: 'scheduled',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    },
-    {
-      post: 'internship',
-      name: 'Jack Doe',
-      applyDate: new Date('2020-6-13'),
-      status: 'processed',
-      interviewDate: new Date('2020-7-22'),
-      cvURl: 'https://www.docdroid.net/qP6Oxiu/cv-pdf'
-    }
-  ];
+  requestsArray: Array<JoinUsApplication> = [];
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService) {
+    private requestsHttp: JobInternshipRequestHttpService,
+    public urlService: HostUrlService,
+    private toaster: ToastService
+  ) {
+  }
+
+  fetchApplications() {
+    this.requestsHttp.getAllJoinUsRequests().subscribe((res: Array<JoinUsApplication>) => {
+      this.requestsArray = res;
+    }, () => {
+      this.toaster.error('Cannot fetch applications', 'Error');
+    });
+  }
+
+  getSelectedElement(): JoinUsApplication {
+    return this.requestsArray[this.selectedElementIndex];
   }
 
   ngOnInit(): void {
+    this.fetchApplications();
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
     this.requestsArray.reverse();
-    this.ordersListManagementService.setOrdersArray(this.requestsArray);
   }
 
   setScheduledDate(dateElement: HTMLInputElement): void {
-    console.log(dateElement.value);
     if (dateElement.value) {
-      this.requestsArray[this.selectedElementIndex].interviewDate = new Date(dateElement.value);
+      const interviewDate = new Date(dateElement.value);
+      this.requestsArray[this.selectedElementIndex].interviewDate = interviewDate;
       this.requestsArray[this.selectedElementIndex].status = 'scheduled';
+      this.requestsHttp.scheduleInterviewDate(interviewDate, this.getSelectedElement().id);
     } else {
       this.requestsArray[this.selectedElementIndex].interviewDate = null;
       this.requestsArray[this.selectedElementIndex].status = 'pending';
+      this.requestsHttp.updateApplicationStatus('pending', this.getSelectedElement().id);
+
     }
-    // send request to server
     dateElement.value = null;
   }
 
+  setApplicationStatus(status: string): void {
+    this.requestsArray[this.selectedElementIndex].status = status;
+    this.requestsHttp.updateApplicationStatus(status, this.getSelectedElement().id);
+  }
 
+  deleteApplication(): void {
+    this.requestsHttp.deleteApplication(this.getSelectedElement().id);
+    this.requestsArray.splice(this.selectedElementIndex, 1);
+  }
 }
