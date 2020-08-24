@@ -23,18 +23,23 @@
                 <div class="row">
                   <div class="col-sm-12 data-field-col">
                     <form [formGroup]="form">
+                      <div *ngIf="selectedElementIndex>=0" class="text-center">
+                        <img src="{{url+getSelectedTeamMember().imageURL}}" class="img-fluid img-thumbnail member-img"
+                             alt="image missing...">
+                      </div>
                       <label for="member-name">Name</label>
                       <input type="text" formControlName="memberName" class="form-control" id="member-name">
 
                       <div class="data-field-col">
                         <label for="member-post">Post</label>
-                        <input type="text" formControlName="memberPost" class="form-control" id="member-post" >
+                        <input type="text" formControlName="memberPost" class="form-control" id="member-post">
                       </div>
 
                       <div class="data-field-col">
-                        <ngx-dropzone (change)="onSelect($event)">
+                        <ngx-dropzone (change)="onSelect($event)" multiple="false">
                           <ngx-dropzone-label>Upload Image</ngx-dropzone-label>
-                          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
+                          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                                      [file]="f">
                             <ngx-dropzone-label></ngx-dropzone-label>
                           </ngx-dropzone-image-preview>
                         </ngx-dropzone>
@@ -45,33 +50,13 @@
                 </div>
 
 
-                <!--                    <label for="data-category"> Client </label>-->
-                <!--                    <select class="form-control" id="data-category">-->
-                <!--                      <option>Audio</option>-->
-                <!--                      <option>Computers</option>-->
-                <!--                      <option>Fitness</option>-->
-                <!--                      <option>Appliance</option>-->
-                <!--                    </select>-->
-
-                <!--                  <div class="col-sm-12 data-field-col">-->
-                <!--                    <label for="data-status">Order Status</label>-->
-                <!--                    <select class="form-control" id="data-status">-->
-                <!--                      <option>Pending</option>-->
-                <!--                      <option>Canceled</option>-->
-                <!--                      <option>Delivered</option>-->
-                <!--                    </select>-->
-                <!--                  </div>-->
-                <!--                  <div class="col-sm-12 data-field-col">-->
-                <!--                    <label for="data-price">Price</label>-->
-                <!--                    <input type="text" class="form-control" id="data-price">-->
-                <!--                  </div>-->
-
-
               </div>
             </div>
             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
               <div class="add-data-btn">
-                <button class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+                <button class="btn btn-primary" type="button"
+                        (click)="selectedElementIndex<0 ? addTeamMember() : updateTeamMember()">Submit
+                </button>
               </div>
               <div class="cancel-data-btn">
                 <button class="btn btn-outline-danger" (click)="clearFormValues()">Cancel</button>
@@ -112,11 +97,15 @@
             <tbody>
             <tr *ngFor="let member of membersArray; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-img action-edit" (click)="selectedElementIndex = i ; setFormValues()"><img src="{{member.image}}" alt=""></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i ; setFormValues()">&nbsp;{{member.name}}</td>
-              <td class="product-category action-edit" (click)="selectedElementIndex = i ; setFormValues()">&nbsp;{{member.post}}</td>
+              <td class="product-img action-edit pl-0" (click)="selectedElementIndex = i ; setFormValues()"><img
+                src="{{url+member.imageURL}}" alt=""></td>
+              <td class="product-name action-edit" (click)="selectedElementIndex = i ; setFormValues()">
+                &nbsp;{{member.name}}</td>
+              <td class="product-category action-edit" (click)="selectedElementIndex = i ; setFormValues()">
+                &nbsp;{{member.post}}</td>
               <td class="product-action">
-                <span class="action-edit" title="Edit product" (click)="selectedElementIndex = i ; setFormValues()"><i class="feather icon-edit"></i></span>&nbsp;
+                <span class="action-edit" title="Edit product" (click)="selectedElementIndex = i ; setFormValues()"><i
+                  class="feather icon-edit"></i></span>&nbsp;
                 <span title="Delete product" data-toggle="modal" data-target="#danger-2"
                       (click)="selectedElementIndex = i"><i class="feather icon-trash"></i></span>
               </td>
@@ -152,9 +141,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"
-                (click)="ordersListManagementService.deleteOrder(selectedElementIndex)">Delete
+                (click)="deleteTeamMember()">Delete
         </button>
-        <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal" >Cancel
+        <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel
         </button>
       </div>
     </div>

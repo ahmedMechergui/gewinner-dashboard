@@ -7,7 +7,8 @@ import {ToastrService} from 'ngx-toastr';
 export class ToastService {
   toastParams = {
     positionClass: 'toast-bottom-right',
-    disableTimeOut: false
+    disableTimeOut: false,
+    closeButton: true
   };
 
   /*=============================

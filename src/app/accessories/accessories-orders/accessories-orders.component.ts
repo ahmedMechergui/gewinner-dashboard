@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../../list-view-loader.service';
 import {OrdersListManagementService} from '../../orders-list-management.service';
+import {AccessorieOrder} from '../../shared/models/accessorieOrder.model';
+import {AccessoriesRequestHttpService} from '../accessories-request-http.service';
+import {ToastService} from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-accessories-orders',
@@ -8,48 +11,51 @@ import {OrdersListManagementService} from '../../orders-list-management.service'
   styleUrls: ['./accessories-orders.component.css']
 })
 export class AccessoriesOrdersComponent implements OnInit {
-  selectedElementIndex: number;
-  ordersArray = [
-    {name: 'Headrest neck support', quantity: 2, date: new Date('2020-7-23'), client: 'individual', status: 'delivered', price: 265},
-    {name: 'adjustable table', quantity: 56, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'rear-view mirror', quantity: 3, client: 'organization', date: new Date('2020-7-22'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 1, client: 'organization', date: new Date('2020-7-21'), status: 'delivered', price: 265},
-    {name: 'security belt', quantity: 5, client: 'organization', date: new Date('2020-7-21'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 45, client: 'individual', date: new Date('2020-7-20'), status: 'delivered', price: 265},
-    {name: 'Camera', quantity: 12, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 2, client: 'organization', date: new Date('2020-7-19'), status: 'delivered', price: 265},
-    {name: 'adjustable table', quantity: 56, client: 'organization', date: new Date('2020-7-19'), status: 'delivered', price: 265},
-    {name: 'rear-view mirror', quantity: 3, client: 'organization', date: new Date('2020-7-18'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 1, client: 'organization', date: new Date('2020-7-18'), status: 'delivered', price: 265},
-    {name: 'security belt', quantity: 5, client: 'organization', date: new Date('2020-7-18'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 45, client: 'organization', date: new Date('2020-7-17'), status: 'delivered', price: 265},
-    {name: 'Camera', quantity: 12, client: 'organization', date: new Date('2020-7-12'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 2, client: 'organization', date: new Date('2020-7-12'), status: 'delivered', price: 265},
-    {name: 'adjustable table', quantity: 56, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'rear-view mirror', quantity: 3, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 1, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'security belt', quantity: 5, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 45, client: 'organization', date: new Date('2020-7-23'), status: 'delivered', price: 265},
-    {name: 'Camera', quantity: 12, client: 'organization', date: new Date('2020-7-19'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 45, client: 'organization', date: new Date('2020-7-20'), status: 'pending', price: 265},
-    {name: 'Headrest neck support', quantity: 2, client: 'organization', date: new Date('2020-7-20'), status: 'pending', price: 265},
-    {name: 'adjustable table', quantity: 56, client: 'organization', date: new Date('2020-7-21'), status: 'delivered', price: 265},
-    {name: 'rear-view mirror', quantity: 3, client: 'individual', date: new Date('2020-7-21'), status: 'rejected', price: 265},
-    {name: 'security belt', quantity: 5, client: 'organization', date: new Date('2020-7-22'), status: 'delivered', price: 265},
-    {name: 'Headrest neck support', quantity: 1, client: 'individual', date: new Date('2020-7-22'), status: 'delivered', price: 265},
-    {name: 'Camera', quantity: 12, client: 'organization', date: new Date('2020-7-23'), status: 'pending', price: 265}
-  ];
+  selectedElementIndex = 0;
+
+  ordersArray: Array<AccessorieOrder> = [];
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService) {
+    public ordersListManagementService: OrdersListManagementService,
+    private httpRequest: AccessoriesRequestHttpService,
+    private toaster: ToastService) {
   }
 
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.ordersArray.reverse();
     this.ordersListManagementService.setOrdersArray(this.ordersArray);
+    this.fetchOrders();
+  }
+
+  getSelectedOrder(): AccessorieOrder {
+    return this.ordersArray[this.selectedElementIndex];
+  }
+
+  fetchOrders() {
+    this.httpRequest.getAllAccessoriesOrders()
+      .subscribe((res: Array<AccessorieOrder>) => {
+        this.ordersArray = res.slice().reverse();
+      }, () => {
+        this.toaster.error('Unable to fetch orders', 'Error :');
+      });
+  }
+
+  changeOrderStatus(status: string) {
+    this.httpRequest.changeOrderStatus(status, this.getSelectedOrder().id).subscribe(() => {
+      this.ordersArray[this.selectedElementIndex].status = status;
+    }, () => {
+      this.toaster.error('Unable to change order status', 'Error :');
+    });
+  }
+
+  deleteOrder() {
+    this.httpRequest.deleteOrder(this.getSelectedOrder().id).subscribe(() => {
+      this.ordersArray.splice(this.selectedElementIndex, 1);
+    }, () => {
+      this.toaster.error('Unable to delete order', 'Error :');
+    });
   }
 
 

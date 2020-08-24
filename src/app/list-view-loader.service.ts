@@ -32,7 +32,6 @@ export class ListViewLoaderService {
 
   loadDataListViewScript = async (): Promise<void> => {
     this.scriptsLoaderService.addManyScriptsAsync(
-      '/assets/vendors/js/extensions/dropzone.min.js',
       '/assets/vendors/js/tables/datatable/datatables.min.js',
       '/assets/vendors/js/tables/datatable/datatables.bootstrap4.min.js',
       '/assets/vendors/js/tables/datatable/dataTables.select.min.js',
@@ -43,11 +42,10 @@ export class ListViewLoaderService {
     ).then(() => {
         const event = document.createEvent('Event');
         event.initEvent('list-script-loaded', true, true);
-        console.log('event fired');
         document.dispatchEvent(event);
       }
     );
-  };
+  }
   // loadDataListViewScript(): void {
   //
   //   this.scriptsLoaderService.addOneScriptAsync('/assets/js/scripts/ui/data-list-view.js').then(

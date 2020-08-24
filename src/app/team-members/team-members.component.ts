@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ListViewLoaderService} from '../list-view-loader.service';
 import {OrdersListManagementService} from '../orders-list-management.service';
+import {TeamMembersHttpService} from './team-members-http.service';
+import {TeamMember} from '../shared/models/team-member.model';
+import {ToastService} from '../shared/services/toast.service';
+import {HostUrlService} from '../shared/services/host-url.service';
 
 @Component({
   selector: 'app-team-members',
@@ -10,113 +14,27 @@ import {OrdersListManagementService} from '../orders-list-management.service';
 })
 export class TeamMembersComponent implements OnInit {
 
+  url = this.urlService.url;
   form: FormGroup;
   files: File[] = [];
   selectedElementIndex: number;
-  membersArray = [
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    },
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    },
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    },
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    },
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    },
-    {
-      image: '/assets/images/team/team-1.jpg',
-      name: 'John Doe',
-      post: 'Chief executive officer',
-    },
-    {
-      image: '/assets/images/team/team-6.jpg',
-      name: 'Fieby Doe',
-      post: 'Manger',
-    },
-    {
-      image: '/assets/images/team/team-3.jpg',
-      name: 'Mark Doe',
-      post: 'Senior electrical engineer',
-    }
-  ];
+  membersArray: Array<TeamMember> = [];
 
   constructor(
+    public urlService: HostUrlService,
+    private httpRequest: TeamMembersHttpService,
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService) {
+    public ordersListManagementService: OrdersListManagementService,
+    private toaster: ToastService) {
   }
 
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.membersArray.reverse();
+    this.getAllTeamMembers();
     this.ordersListManagementService.setOrdersArray(this.membersArray);
     this.initForm();
+    this.listenToAddNew();
   }
 
   initForm(): void {
@@ -137,15 +55,6 @@ export class TeamMembersComponent implements OnInit {
     this.form.reset();
   }
 
-  onSubmit(): void {
-    const values = this.form.value;
-    this.membersArray.push({
-      name: values.memberName,
-      image: '/assets/images/elements/no-image.jpg',
-      post: values.memberPost
-    });
-  }
-
   onSelect(event) {
     console.log(event);
     this.files.push(...event.addedFiles);
@@ -156,6 +65,53 @@ export class TeamMembersComponent implements OnInit {
     this.files.splice(this.files.indexOf(event), 1);
   }
 
+  /* =======================
+     # http related functions
+     =======================*/
 
+  getSelectedTeamMember(): TeamMember {
+    return this.membersArray[this.selectedElementIndex];
+  }
+
+  getAllTeamMembers(): void {
+    this.httpRequest.getAllTeamMembers().subscribe((teamMembers: Array<TeamMember>) => {
+      this.membersArray = teamMembers.slice().reverse();
+    }, () => {
+      this.toaster.error('Unable to fetch team members', 'Error :');
+    });
+  }
+
+  deleteTeamMember(): void {
+    this.httpRequest.deleteTeamMember(this.getSelectedTeamMember().id).subscribe(() => {
+      this.membersArray.splice(this.selectedElementIndex, 1);
+      this.toaster.success('Team member deleted', 'Done :');
+    }, () => {
+      this.toaster.error('Unable to delete team member', 'Error :');
+    });
+  }
+
+  addTeamMember() {
+    this.httpRequest.addTeamMember(this.form, this.files).subscribe(() => {
+      this.toaster.success('Reload this page to see changes', 'Member added :');
+    }, () => {
+      this.toaster.error('Unable to add team member', 'Error :');
+    });
+  }
+
+  listenToAddNew() {
+    document.addEventListener('add-new-clicked', () => {
+      this.selectedElementIndex = -1;
+      this.clearFormValues();
+    });
+  }
+
+  updateTeamMember() {
+    this.httpRequest.updateTeamMember(this.getSelectedTeamMember().id, this.form, this.files)
+      .subscribe(() => {
+        this.toaster.success('Reload page to see changes', 'Member edited');
+      }, () => {
+        this.toaster.error('Unable to edit member', 'Error :');
+      });
+  }
 
 }

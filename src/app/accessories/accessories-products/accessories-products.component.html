@@ -12,7 +12,7 @@
           <div class="add-new-data">
             <div class="div mt-2 px-2 d-flex new-data-title justify-content-between">
               <div>
-                <h4 class="text-uppercase">Order data</h4>
+                <h4 class="text-uppercase">accessories data</h4>
               </div>
               <div class="hide-data-sidebar">
                 <i class="feather icon-x"></i>
@@ -21,7 +21,7 @@
             <div class="data-items pb-2">
               <div class="data-fields px-2">
                 <div class="row">
-                  <div class="col-sm-12 data-field-col">
+                  <div class="col-sm-12 data-field-col" *ngIf="productsArray.length>0">
                     <form [formGroup]="form">
                       <label for="product-name">Product name</label>
                       <input type="text" formControlName="prodName" class="form-control" id="product-name">
@@ -43,12 +43,13 @@
                         <div class="form-row">
                           <div class="col-9">
                             <input type="number" class="form-control" id="product-quantity"
-                                   formControlName="prodQuantity">
+                                   formControlName="prodQuantity"
+                                   value="{{!isInfiniteSelectedQuantity() ? getSelectedAccessorie().availableQuantity : null}}">
                           </div>
                           <div class="col-3">
                             <div class="custom-control custom-switch">
                               <input type="checkbox" class="custom-control-input" (click)="infinityQuantityClicked()"
-                                     id="customSwitch9">
+                                     id="customSwitch9" [checked]="isInfiniteSelectedQuantity()">
                               <label class="custom-control-label" for="customSwitch9">
                                 <span class="switch-text-left">Infinite</span>
                                 <span class="switch-text-right">Infinite</span>
@@ -62,41 +63,20 @@
                 </div>
 
 
-                      <!--                    <label for="data-category"> Client </label>-->
-                      <!--                    <select class="form-control" id="data-category">-->
-                      <!--                      <option>Audio</option>-->
-                      <!--                      <option>Computers</option>-->
-                      <!--                      <option>Fitness</option>-->
-                      <!--                      <option>Appliance</option>-->
-                      <!--                    </select>-->
-
-                      <!--                  <div class="col-sm-12 data-field-col">-->
-                      <!--                    <label for="data-status">Order Status</label>-->
-                      <!--                    <select class="form-control" id="data-status">-->
-                      <!--                      <option>Pending</option>-->
-                      <!--                      <option>Canceled</option>-->
-                      <!--                      <option>Delivered</option>-->
-                      <!--                    </select>-->
-                      <!--                  </div>-->
-                      <!--                  <div class="col-sm-12 data-field-col">-->
-                      <!--                    <label for="data-price">Price</label>-->
-                      <!--                    <input type="text" class="form-control" id="data-price">-->
-                      <!--                  </div>-->
-
-                      <div class="data-field-col">
-                      <ngx-dropzone (change)="onSelect($event)">
-                        <ngx-dropzone-label>Upload Images</ngx-dropzone-label>
-                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
-                          <ngx-dropzone-label></ngx-dropzone-label>
-                        </ngx-dropzone-image-preview>
-                      </ngx-dropzone>
-                      </div>
+                <div class="data-field-col">
+                  <ngx-dropzone (change)="onSelect($event)">
+                    <ngx-dropzone-label>Upload Images <br> 4 max</ngx-dropzone-label>
+                    <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
+                      <ngx-dropzone-label></ngx-dropzone-label>
+                    </ngx-dropzone-image-preview>
+                  </ngx-dropzone>
+                </div>
 
               </div>
             </div>
             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
               <div class="add-data-btn">
-                <button class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+                <button class="btn btn-primary" type="button" (click)="updateAccessorie()">Submit</button>
               </div>
               <div class="cancel-data-btn">
                 <button class="btn btn-outline-danger">Cancel</button>
@@ -105,26 +85,6 @@
           </div>
         </div>
 
-        <!-- DataTable starts -->
-        <div class="action-btns d-none">
-          <div class="btn-dropdown mr-1 mb-1">
-            <div class="btn-group dropdown actions-dropodown">
-              <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Actions
-              </button>
-              <div class="dropdown-menu order-action-buttons">
-                <a class="dropdown-item" (click)="ordersListManagementService.confirmSelectedOrders()"><i
-                  class="feather icon-check"></i>Confirm</a>
-                <a class="dropdown-item" (click)="ordersListManagementService.rejectSelectedOrders()"><i
-                  class="feather icon-slash"></i>Reject</a>
-                <a class="dropdown-item" (click)="ordersListManagementService.deleteSelectedOrders()"><i
-                  class="feather icon-trash"></i>Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- DataTable ends -->
 
         <!-- add new sidebar starts -->
         <div class="table-responsive">
@@ -135,8 +95,8 @@
               <th>IMAGE</th>
               <th>NAME</th>
               <th>PRICE</th>
-              <th>ORDERS THIS MONTH</th>
               <th>TOTAL ORDERS</th>
+              <th>ORDERS THIS MONTH</th>
               <th>AVAILABLE</th>
               <th>ACTION</th>
             </tr>
@@ -144,23 +104,28 @@
             <tbody>
             <tr *ngFor="let product of productsArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-img action-edit" (click)="selectedElementIndex = i"><img src="{{product.imageURL}}" alt=""></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">&nbsp;{{product.name}}</td>
-              <td class="product-category action-edit" (click)="selectedElementIndex = i">&nbsp;{{product.price}}&nbsp;dt</td>
-              <td class="product-orders-total action-edit"(click)="selectedElementIndex = i">&nbsp;{{product.totalOrders}}</td>
-              <td class="product-orders-this-month action-edit" (click)="selectedElementIndex = i">&nbsp;{{product.ordersThisMonth}}</td>
-              <td class="action-edit" (click)="selectedElementIndex = i">
+              <td class="product-img action-edit pl-0" (click)="selectedElementIndex = i ; manageEnableDisable()"><img
+                src="{{url+product.imageURL[0]}}" alt="image missing"></td>
+              <td class="product-name action-edit" (click)="selectedElementIndex = i ; manageEnableDisable()">&nbsp;{{product.name}}</td>
+              <td class="product-category action-edit" (click)="selectedElementIndex = i ; manageEnableDisable()">&nbsp;{{product.price}}&nbsp;dt</td>
+              <td class="product-orders-total action-edit" (click)="selectedElementIndex = i ; manageEnableDisable()">
+                &nbsp;{{product.totalOrders}}</td>
+              <td class="product-orders-this-month action-edit" (click)="selectedElementIndex = i ; manageEnableDisable()">
+                &nbsp;{{product.ordersThisMonth}}</td>
+              <td class="action-edit" (click)="selectedElementIndex = i ; manageEnableDisable()">
                 <div class="chip"
-                     [class.chip-warning]="product.available<10"
-                     [class.chip-danger]="product.available <= 0"
-                     [class.chip-success]="product.available>9">
+                     [class.chip-warning]="product.availableQuantity<10"
+                     [class.chip-danger]="product.availableQuantity <= 0"
+                     [class.chip-success]="product.availableQuantity>9">
                   <div class="chip-body">
-                    <div class="chip-text">{{product.available > 0 ? product.available : 'Unavailable'}}</div>
+                    <div
+                      class="chip-text">{{product.availableQuantity > 0 ? product.availableQuantity : 'Unavailable'}}</div>
                   </div>
                 </div>
               </td>
               <td class="product-action">
-                <span class="action-edit" title="Edit product" (click)="selectedElementIndex = i"><i class="feather icon-edit"></i></span>&nbsp;
+                <span class="action-edit" title="Edit product" (click)="selectedElementIndex = i"><i
+                  class="feather icon-edit"></i></span>&nbsp;
                 <span title="Delete product" data-toggle="modal" data-target="#danger-2"
                       (click)="selectedElementIndex = i"><i class="feather icon-trash"></i></span>
               </td>
@@ -196,7 +161,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"
-                (click)="ordersListManagementService.deleteOrder(selectedElementIndex)">Delete
+                (click)="deleteAccessorie()">Delete
         </button>
         <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel
         </button>

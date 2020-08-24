@@ -1,8 +1,5 @@
-
-
-$(document).on('list-script-loaded' ,function(event) {
+$(document).on('list-script-loaded', function (event) {
   "use strict"
-
 
 
   console.log('script loaded');
@@ -13,7 +10,7 @@ $(document).on('list-script-loaded' ,function(event) {
       {
         orderable: true,
         targets: 0,
-        checkboxes: { selectRow: true }
+        checkboxes: {selectRow: true}
       }
     ],
     dom:
@@ -40,29 +37,38 @@ $(document).on('list-script-loaded' ,function(event) {
     buttons: [
       {
         text: "<i class='feather icon-plus'></i> Add New",
-        action: function() {
+        action: function () {
           $(this).removeClass("btn-secondary")
           $(".add-new-data").addClass("show")
           $(".overlay-bg").addClass("show")
           $("#data-name, #data-price").val("")
           $("#data-category, #data-status").prop("selectedIndex", 0)
+
+          // Create the event.
+          const event = document.createEvent('Event');
+
+// Define that the event name is 'build'.
+          event.initEvent('add-new-clicked', true, true);
+
+
+// target can be any Element or other EventTarget.
+          document.dispatchEvent(event);
         },
         className: "btn-outline-primary"
       }
     ],
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".dt-buttons .btn").removeClass("btn-secondary")
     }
   });
 
-  dataListView.on('draw.dt', function(){
-    setTimeout(function(){
+  dataListView.on('draw.dt', function () {
+    setTimeout(function () {
       if (navigator.userAgent.indexOf("Mac OS X") != -1) {
         $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
       }
     }, 50);
   });
-
 
 
   // init thumb view datatable
@@ -72,7 +78,7 @@ $(document).on('list-script-loaded' ,function(event) {
       {
         orderable: true,
         targets: 0,
-        checkboxes: { selectRow: true }
+        checkboxes: {selectRow: true}
       }
     ],
     dom:
@@ -91,7 +97,7 @@ $(document).on('list-script-loaded' ,function(event) {
     buttons: [
       {
         text: "<i class='feather icon-plus'></i> Add New",
-        action: function() {
+        action: function () {
           $(this).removeClass("btn-secondary")
           $(".add-new-data").addClass("show")
           $(".overlay-bg").addClass("show")
@@ -99,13 +105,13 @@ $(document).on('list-script-loaded' ,function(event) {
         className: "btn-outline-primary"
       }
     ],
-    initComplete: function(settings, json) {
+    initComplete: function (settings, json) {
       $(".dt-buttons .btn").removeClass("btn-secondary")
     }
   })
 
-  dataThumbView.on('draw.dt', function(){
-    setTimeout(function(){
+  dataThumbView.on('draw.dt', function () {
+    setTimeout(function () {
       if (navigator.userAgent.indexOf("Mac OS X") != -1) {
         $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
       }
@@ -117,14 +123,13 @@ $(document).on('list-script-loaded' ,function(event) {
   actionDropdown.insertBefore($(".top .actions .dt-buttons"))
 
 
-
   // Scrollbar
   if ($(".data-items").length > 0) {
-    new PerfectScrollbar(".data-items", { wheelPropagation: false })
+    new PerfectScrollbar(".data-items", {wheelPropagation: false})
   }
 
   // Close sidebar
-  $(".hide-data-sidebar, .cancel-data-btn, .overlay-bg").on("click", function() {
+  $(".hide-data-sidebar, .cancel-data-btn, .overlay-bg").on("click", function () {
     $(".add-new-data").removeClass("show")
     $(".overlay-bg").removeClass("show")
     $("#data-name, #data-price").val("")
@@ -132,7 +137,7 @@ $(document).on('list-script-loaded' ,function(event) {
   })
 
   // On Edit
-  $('.action-edit').on("click",function(e){
+  $('.action-edit').on("click", function (e) {
     e.stopPropagation();
     // $('#data-name').val('Altec Lansing - Bluetooth Speaker');
     // $('#data-price').val('$99');
@@ -141,7 +146,7 @@ $(document).on('list-script-loaded' ,function(event) {
   });
 
   // On Delete
-  $('.action-delete').on("click", function(e){
+  $('.action-delete').on("click", function (e) {
     // e.stopPropagation();
     $(this).closest('td').parent('tr').fadeOut();
   });

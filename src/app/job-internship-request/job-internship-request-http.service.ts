@@ -25,7 +25,6 @@ export class JobInternshipRequestHttpService {
   }
 
   deleteApplication(id: string) {
-    console.log('called delete');
     this.http.delete(this.url + '/join-us/' + id).subscribe();
   }
 }
