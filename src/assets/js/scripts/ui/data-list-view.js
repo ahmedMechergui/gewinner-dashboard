@@ -20,9 +20,10 @@ $(document).on('list-script-loaded', function (event) {
       sSearch: ""
     },
     aLengthMenu: [[10, 15, 20, 30], [10, 15, 20, 30]],
-    select: {
-      style: "multi"
-    },
+// Incommenting the code below will make list element get a meaning styling when they are clicked
+    // select: {
+    //   style: "multi"
+    // },
     /*
     script line was initially sorting list elements by name , uncommenting the line below will bring
     back that behavior
@@ -151,24 +152,6 @@ $(document).on('list-script-loaded', function (event) {
     $(this).closest('td').parent('tr').fadeOut();
   });
 
-
-  // // dropzone init
-  // Dropzone.options.dataListUpload = {
-  //   complete: function(files) {
-  //     var _this = this
-  //     // checks files in class dropzone and remove that files
-  //     $(".hide-data-sidebar, .cancel-data-btn, .actions .dt-buttons").on(
-  //       "click",
-  //       function() {
-  //         $(".dropzone")[0].dropzone.files.forEach(function(file) {
-  //           file.previewElement.remove()
-  //         })
-  //         $(".dropzone").removeClass("dz-started")
-  //       }
-  //     )
-  //   }
-  // }
-  // Dropzone.options.dataListUpload.complete()
 
   // mac chrome checkbox fix
   if (navigator.userAgent.indexOf("Mac OS X") != -1) {

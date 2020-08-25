@@ -38,18 +38,6 @@ export class AccessoriesRequestHttpService {
     return this.http.post(this.url + '/accessories-update/' + id, formData);
   }
 
-
-  /*
- this function removes null properties from the object
-  */
-  cleanObject(obj) {
-    for (const propName in obj) {
-      if (obj[propName] === null || obj[propName] === undefined || obj[propName] === '') {
-        delete obj[propName];
-      }
-    }
-  }
-
   /*======================
   # Accessories Orders
     ======================*/
