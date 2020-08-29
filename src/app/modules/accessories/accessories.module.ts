@@ -7,6 +7,7 @@ import {AccessoriesProductsComponent} from '../../accessories/accessories-produc
 import {AccessoriesOrdersComponent} from '../../accessories/accessories-orders/accessories-orders.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NgxDropzoneModule } from 'ngx-dropzone';
+import {SharedComponentsModule} from '../shared-components/shared-components.module';
 
 
 @NgModule({
@@ -15,13 +16,14 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
     AccessoriesProductsComponent,
     AccessoriesOrdersComponent
   ],
-  imports: [
-    CommonModule,
-    AccessoriesRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxDropzoneModule
-  ]
+    imports: [
+        CommonModule,
+        AccessoriesRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxDropzoneModule,
+        SharedComponentsModule
+    ]
 })
 export class AccessoriesModule {
 }

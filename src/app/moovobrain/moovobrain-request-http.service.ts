@@ -11,6 +11,25 @@ export class MoovobrainRequestHttpService {
   constructor(private urlService: HostUrlService, private http: HttpClient) {
   }
 
+  /*=======================
+  # Orders
+   ========================*/
+
+  getAllOrders() {
+    return this.http.get(this.url + '/moovobrain');
+  }
+
+  updateOrderStatus(id: string, status: string) {
+    return this.http.post(this.url + '/moovobrain/' + id, {status});
+  }
+
+  deleteOrder(id: string) {
+    return this.http.delete(this.url + '/moovobrain/' + id);
+  }
+
+  /*=======================
+  # Test requests
+   ========================*/
   getAllTestRequests() {
     return this.http.get(this.url + '/tests');
   }

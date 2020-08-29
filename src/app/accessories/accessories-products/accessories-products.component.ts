@@ -14,12 +14,27 @@ import {ToastService} from '../../shared/services/toast.service';
 })
 export class AccessoriesProductsComponent implements OnInit {
   form: FormGroup;
+  isLoading = false;
   files: File[] = [];
-  quantityInputOldValue: string;
+  quantityInputOldValue = '1';
   quantityDisabled = false;
   selectedElementIndex = 0;
   url = this.urlService.url;
   productsArray: Accessorie[] = [];
+  isAddingNew = false;
+  placeHolderAccessorie: Accessorie = {
+    createdAt: null,
+    description: '',
+    id: '',
+    imageURL: [],
+    isAvailable: false,
+    name: '',
+    ordersThisMonth: 0,
+    price: 0,
+    totalOrders: 0,
+    updatedAt: null,
+    availableQuantity: Infinity
+  };
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
@@ -60,26 +75,6 @@ export class AccessoriesProductsComponent implements OnInit {
     });
   }
 
-  onSubmit(): void {
-    if (this.quantityDisabled) {
-      this.form.patchValue({prodQuantity: Infinity});
-    } else {
-      const quantity = (document.getElementById('product-quantity') as HTMLInputElement).value;
-      this.form.patchValue({prodQuantity: quantity});
-    }
-    const values = this.form.value;
-    console.log(this.form.value);
-    // this.productsArray.push({
-    //   name: values.prodName,
-    //   imageURL: '/assets/images/elements/no-image.jpg',
-    //   description: values.prodDescription,
-    //   price: values.prodPrice,
-    //   available: values.prodQuantity,
-    //   totalOrders: 0,
-    //   ordersThisMonth: 0,
-    // });
-  }
-
   infinityQuantityClicked() {
     this.quantityDisabled = this.getSelectedAccessorie().availableQuantity === Infinity;
     const quantityInput = (document.getElementById('product-quantity') as HTMLInputElement);
@@ -89,12 +84,12 @@ export class AccessoriesProductsComponent implements OnInit {
       quantityInput.value = this.quantityInputOldValue;
       const oldValue = this.quantityInputOldValue ? +this.quantityInputOldValue : 1;
       this.form.get('prodQuantity').setValue(oldValue);
-      this.productsArray[this.selectedElementIndex].availableQuantity = oldValue;
+      this.getSelectedAccessorie().availableQuantity = oldValue;
     } else {
       this.quantityInputOldValue = quantityInput.value;
       quantityInput.type = 'text';
       this.form.get('prodQuantity').setValue(Infinity);
-      this.productsArray[this.selectedElementIndex].availableQuantity = Infinity;
+      this.getSelectedAccessorie().availableQuantity = Infinity;
       quantityInput.value = 'Infinite';
       quantityInput.setAttribute('disabled', 'true');
     }
@@ -104,7 +99,15 @@ export class AccessoriesProductsComponent implements OnInit {
     return this.getSelectedAccessorie().availableQuantity > 99999999;
   }
 
+  setInfinite() {
+    const quantityInput = (document.getElementById('product-quantity') as HTMLInputElement);
+    quantityInput.type = 'text';
+    quantityInput.value = 'Infinite';
+    quantityInput.setAttribute('disabled', 'true');
+  }
+
   manageEnableDisable() {
+    this.clearFiles();
     this.setFormValues();
     const isInfinite = this.getSelectedAccessorie().availableQuantity > 99999999;
     if (isInfinite) {
@@ -116,7 +119,11 @@ export class AccessoriesProductsComponent implements OnInit {
   }
 
   getSelectedAccessorie(): Accessorie {
-    return this.productsArray[this.selectedElementIndex];
+    if (!this.isAddingNew) {
+      return this.productsArray[this.selectedElementIndex];
+    } else {
+      return this.placeHolderAccessorie;
+    }
   }
 
   clearForm() {
@@ -124,15 +131,17 @@ export class AccessoriesProductsComponent implements OnInit {
   }
 
 
+  clearFiles() {
+    this.files = [];
+  }
+
   // these two function are related to the image upload
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
   }
 
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
@@ -163,7 +172,9 @@ export class AccessoriesProductsComponent implements OnInit {
   }
 
   updateAccessorie(): void {
+    this.isLoading = true;
     this.httpRequests.updateAccessorie(this.getSelectedAccessorie().id, this.form.value, this.files).subscribe(() => {
+      this.isLoading = false;
       const value = this.form.value;
       // this is just for the user to see the changes instantly
       // code looks stupid but other ways are complicated
@@ -175,9 +186,10 @@ export class AccessoriesProductsComponent implements OnInit {
       if (this.files.length > 0) {
         this.toaster.success('reload page to see the full changes', 'Product edited');
       } else {
-        this.toaster.success('Product edited', '');
+        this.toaster.success('Product edited', 'Done');
       }
     }, () => {
+      this.isLoading = false;
       this.toaster.error('Unable to edit Product', 'Error :');
     });
   }
@@ -190,10 +202,26 @@ export class AccessoriesProductsComponent implements OnInit {
     });
   }
 
+  // this function is listening to an event fired from /assets/js/scripts/ui/data-list-view.js
+  // it is fired when "Add New" button is clicked , because the button is written in javascript
   listenToAddNew() {
     document.addEventListener('add-new-clicked', () => {
       this.selectedElementIndex = -1;
+      this.isAddingNew = true;
+      this.quantityInputOldValue = '1';
+      this.clearFiles();
       this.clearForm();
+    });
+  }
+
+  addNewAccessorie() {
+    this.isLoading = true;
+    this.httpRequests.addAccessorie(this.form.value, this.files).subscribe(() => {
+      this.isLoading = false;
+      this.toaster.success('reload to see new accessories', 'Done');
+    }, () => {
+      this.toaster.error('Unable to add new accessories', 'Error :');
+      this.isLoading = false;
     });
   }
 }

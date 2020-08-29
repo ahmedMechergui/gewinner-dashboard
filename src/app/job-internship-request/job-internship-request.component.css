@@ -5,3 +5,7 @@
 .dt-checkboxes-select-all {
   visibility: hidden;
 }
+
+p {
+  white-space: pre-wrap;
+}
