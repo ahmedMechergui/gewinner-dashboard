@@ -74,4 +74,9 @@ export class ClientRequestsHttpService {
     }
     return this.http.delete(this.url + '/services/' + route + '/' + id);
   }
+
+
+  banClient(email: string) {
+    return this.http.post(this.url + '/banClient', {email});
+  }
 }

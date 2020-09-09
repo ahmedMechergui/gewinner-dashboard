@@ -34,8 +34,7 @@
               "src/assets/vendors/js/calendar/extensions/timegrid.min.js",
               "src/assets/vendors/js/calendar/extensions/interactions.min.js",
               "src/assets/vendors/js/pickers/pickadate/picker.js",
-              "src/assets/vendors/js/pickers/pickadate/picker.date.js",
-              "src/assets/js/scripts/extensions/fullcalendar.js"
+              "src/assets/vendors/js/pickers/pickadate/picker.date.js"
             ]
           },
           "configurations": {

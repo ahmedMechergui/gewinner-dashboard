@@ -1,10 +1,24 @@
 $(document).ready(function () {
 
   var isRtl;
-  if ( $('html').attr('data-textdirection') == 'rtl' ) {
+  if ($('html').attr('data-textdirection') == 'rtl') {
     isRtl = true;
   } else {
     isRtl = false;
+  }
+
+  // this is a custom function that formats the date to YYYY-MM-DD
+  // some field do not have a value so we need to check for that
+  const customDate = function (params) {
+    if (params.data.isBanned) {
+      return params.value ? '<span style="color: #dc3545">' + params.value.slice(0, 10) + '</span>' : '';
+    }
+    return params.value ? params.value.slice(0, 10) : '';
+  }
+
+
+  const bannedClientRed = function (params) {
+    return params.data.isBanned ? '<span style="color: #dc3545">' + params.value + '</span>' : params.value
   }
 
 
@@ -19,38 +33,43 @@ $(document).ready(function () {
       headerName: 'Name',
       field: 'name',
       filter: true,
-      width: 175,
-      // cellRenderer: customAvatarHTML,
+      width: 200,
+      cellRenderer: bannedClientRed,
     },
     {
       headerName: 'Email',
       field: 'email',
       filter: true,
-      width: 225,
+      width: 250,
+      cellRenderer: bannedClientRed,
     },
     {
       headerName: 'Country',
       field: 'country',
       filter: true,
       width: 150,
+      cellRenderer: bannedClientRed,
     },
     {
       headerName: 'Phone',
       field: 'phone',
       filter: true,
       width: 150,
+      cellRenderer: bannedClientRed,
     },
     {
-      headerName: 'Creation date',
-      field: 'creationDate',
+      headerName: 'Sign up date',
+      field: 'createdAt',
       filter: true,
-      width: 200,
+      width: 175,
+      cellRenderer: customDate,
     },
     {
       headerName: 'Next control',
-      field: 'controlDate',
+      field: 'nextSchedule',
       filter: true,
-      width: 200,
+      width: 175,
+      cellRenderer: customDate,
     }
   ];
 
@@ -78,7 +97,7 @@ $(document).ready(function () {
     /*** GET TABLE DATA FROM URL ***/
     agGrid
       .simpleHttpRequest({
-        url: "../../../assets/data/users-list.json"
+        url: "http://127.0.0.1:3000/clients"
       })
       .then(function (data) {
         gridOptions.api.setRowData(data);
@@ -88,6 +107,7 @@ $(document).ready(function () {
     function updateSearchQuery(val) {
       gridOptions.api.setQuickFilter(val);
     }
+
 
     $(".ag-grid-filter").on("keyup", function () {
       updateSearchQuery($(this).val());

@@ -1,13 +1,5 @@
-/*=========================================================================================
-    File Name: fullcalendar.js
-    Description: Fullcalendar
-    --------------------------------------------------------------------------------------
-    Item Name: Vuexy  - Vuejs, HTML & Laravel Admin Dashboard Template
-    Author: PIXINVENT
-    Author URL: http://www.themeforest.net/user/pixinvent
-==========================================================================================*/
-
 $(window).ready(function () {
+const url = 'http://127.0.0.1:3000/events';
 
   // color object for different event types
   var colors = {
@@ -32,6 +24,7 @@ $(window).ready(function () {
   var calendarEl = document.getElementById('fc-default');
 
   var calendar = new FullCalendar.Calendar(calendarEl, {
+    events: url,
     plugins: ["dayGrid", "timeGrid", "interaction"],
     customButtons: {
       addNew: {
@@ -69,6 +62,7 @@ $(window).ready(function () {
     },
     // displays saved event values on click
     eventClick: function (info) {
+     window.selectedEventId = info.event.id;
       $(".modal-calendar").modal("show");
       $(".modal-calendar #cal-event-title").val(info.event.title);
       $(".modal-calendar #cal-start-date").val(moment(info.event.start).format('YYYY-MM-DD'));
@@ -90,8 +84,11 @@ $(window).ready(function () {
     },
   });
 
+
   // render calendar
   calendar.render();
+
+
 
   // appends bullets to left class of header
   $("#basic-examples .fc-right").append(categoryBullets);
@@ -103,8 +100,14 @@ $(window).ready(function () {
 
   // Remove Event
   $(".remove-event").on("click", function () {
-    var removeEvent = calendar.getEventById('newEvent');
+    var removeEvent = calendar.getEventById(window.selectedEventId);
     removeEvent.remove();
+
+    $.ajax({
+      url : url+'/'+window.selectedEventId,
+      method : 'delete',
+    })
+
   });
 
 
@@ -175,8 +178,7 @@ $(window).ready(function () {
       endDate = $("#cal-end-date").val(),
       eventDescription = $("#cal-description").val(),
       correctEndDate = new Date(endDate);
-    calendar.addEvent({
-      id: "newEvent",
+    const eventObject = {
       title: eventTitle,
       start: startDate,
       end: correctEndDate,
@@ -184,7 +186,9 @@ $(window).ready(function () {
       color: evtColor,
       dataEventColor: eventColor,
       allDay: true
-    });
+    }
+    calendar.addEvent(eventObject);
+    $.post(url,eventObject);
   });
 
   // date picker

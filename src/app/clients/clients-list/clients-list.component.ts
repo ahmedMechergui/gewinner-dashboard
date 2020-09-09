@@ -1,6 +1,8 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ScriptsLoaderService} from '../../scripts-loader.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ClientRequestsHttpService} from '../client-requests-http.service';
+import {ToastService} from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-clients-list',
@@ -9,8 +11,11 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 })
 export class ClientsListComponent implements OnInit, AfterViewInit {
   form: FormGroup;
+  isLoading = false;
 
-  constructor(private scriptsLoaderService: ScriptsLoaderService) {
+  constructor(private scriptsLoaderService: ScriptsLoaderService,
+              private httpRequest: ClientRequestsHttpService,
+              private toaster: ToastService) {
     this.loadStylesheets();
   }
 
@@ -43,8 +48,16 @@ export class ClientsListComponent implements OnInit, AfterViewInit {
     );
   }
 
-  clearInput(element: HTMLInputElement): void {
-    element.value = '';
+
+  banClient(element: HTMLInputElement): void {
+    this.isLoading = true;
+    this.httpRequest.banClient(element.value).subscribe(() => {
+      this.isLoading = false;
+      this.toaster.success('Client banned successfully', 'Done');
+    }, () => {
+      this.isLoading = false;
+      this.toaster.error('Unable to ban client , please verify the email', 'Error :');
+    });
   }
 
 }

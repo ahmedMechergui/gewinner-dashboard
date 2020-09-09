@@ -118,3 +118,13 @@ ngx-dropzone-label {
 .aggrid .ag-paging-panel {
   height: 21px !important;
 }
+
+
+
+
+/* =======================
+    # Coming events calender
+   ======================= */
+.bullets-group-1 {
+  display: none !important;
+}
