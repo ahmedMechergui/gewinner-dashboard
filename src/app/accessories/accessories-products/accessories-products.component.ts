@@ -173,21 +173,14 @@ export class AccessoriesProductsComponent implements OnInit {
 
   updateAccessorie(): void {
     this.isLoading = true;
-    this.httpRequests.updateAccessorie(this.getSelectedAccessorie().id, this.form.value, this.files).subscribe(() => {
+    this.httpRequests.updateAccessorie(this.getSelectedAccessorie().id,
+      this.form.value, this.files).subscribe((updatedAccessories: Accessorie) => {
       this.isLoading = false;
-      const value = this.form.value;
-      // this is just for the user to see the changes instantly
-      // code looks stupid but other ways are complicated
-      this.productsArray[this.selectedElementIndex].name = value.prodName;
-      this.productsArray[this.selectedElementIndex].description = value.prodDescription;
-      this.productsArray[this.selectedElementIndex].price = value.prodPrice;
-      this.productsArray[this.selectedElementIndex].availableQuantity = value.prodQuantity;
-
-      if (this.files.length > 0) {
-        this.toaster.success('reload page to see the full changes', 'Product edited');
-      } else {
-        this.toaster.success('Product edited', 'Done');
+      if (updatedAccessories.availableQuantity === null) {
+        updatedAccessories.availableQuantity = Infinity;
       }
+      this.productsArray[this.selectedElementIndex] = updatedAccessories;
+      this.toaster.success('Accessories edited', 'Success');
     }, () => {
       this.isLoading = false;
       this.toaster.error('Unable to edit Product', 'Error :');
@@ -216,9 +209,13 @@ export class AccessoriesProductsComponent implements OnInit {
 
   addNewAccessorie() {
     this.isLoading = true;
-    this.httpRequests.addAccessorie(this.form.value, this.files).subscribe(() => {
+    this.httpRequests.addAccessorie(this.form.value, this.files).subscribe((accessorie: Accessorie) => {
       this.isLoading = false;
-      this.toaster.success('reload to see new accessories', 'Done');
+      if (accessorie.availableQuantity === null){
+        accessorie.availableQuantity = Infinity;
+      }
+      this.productsArray.push(accessorie);
+      this.toaster.success('New accessories added', 'Success');
     }, () => {
       this.toaster.error('Unable to add new accessories', 'Error :');
       this.isLoading = false;

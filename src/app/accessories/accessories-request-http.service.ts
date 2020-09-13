@@ -27,6 +27,11 @@ export class AccessoriesRequestHttpService {
     return this.http.post(this.url + '/accessories-update/' + id, formData);
   }
 
+  addAccessorie(values: any, files: File[]) {
+    const formData = this.FormToFormData(values, files);
+    return this.http.post(this.url + '/accessories', formData);
+  }
+
   FormToFormData(values: any, files: File[]) {
     const formData = new FormData();
     formData.append('name', values.prodName);
@@ -42,10 +47,6 @@ export class AccessoriesRequestHttpService {
     return formData;
   }
 
-  addAccessorie(values: any, files: File[]) {
-    const formData = this.FormToFormData(values, files);
-    return this.http.post(this.url + '/accessories', formData);
-  }
 
   /*======================
   # Accessories Orders

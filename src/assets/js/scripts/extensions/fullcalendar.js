@@ -1,5 +1,5 @@
 $(window).ready(function () {
-const url = 'http://127.0.0.1:3000/events';
+  const url = 'http://127.0.0.1:3000/events';
 
   // color object for different event types
   var colors = {
@@ -30,8 +30,8 @@ const url = 'http://127.0.0.1:3000/events';
       addNew: {
         text: ' Add',
         click: function () {
-          var calDate = new Date,
-            todaysDate = calDate.toISOString().slice(0, 10);
+          var calDate = new Date;
+          todaysDate = calDate.toISOString().slice(0, 10);
           $(".modal-calendar").modal("show");
           $(".modal-calendar .cal-submit-event").addClass("d-none");
           $(".modal-calendar .remove-event").addClass("d-none");
@@ -57,12 +57,12 @@ const url = 'http://127.0.0.1:3000/events';
       $(".modal-calendar").modal("show");
     },
     dateClick: function (info) {
-      $(".modal-calendar #cal-start-date").val(info.dateStr).attr("disabled", true);
+      $(".modal-calendar #cal-start-date").val(info.dateStr);
       $(".modal-calendar #cal-end-date").val(info.dateStr);
     },
     // displays saved event values on click
     eventClick: function (info) {
-     window.selectedEventId = info.event.id;
+      window.selectedEventId = info.event.id;
       $(".modal-calendar").modal("show");
       $(".modal-calendar #cal-event-title").val(info.event.title);
       $(".modal-calendar #cal-start-date").val(moment(info.event.start).format('YYYY-MM-DD'));
@@ -89,13 +89,40 @@ const url = 'http://127.0.0.1:3000/events';
   calendar.render();
 
 
-
   // appends bullets to left class of header
   $("#basic-examples .fc-right").append(categoryBullets);
 
   // Close modal on submit button
   $(".modal-calendar .cal-submit-event").on("click", function () {
     $(".modal-calendar").modal("hide");
+    console.log(window.selectedEventId);
+
+    var eventTitle = $("#cal-event-title").val(),
+      startDate = $("#cal-start-date").val(),
+      endDate = $("#cal-end-date").val(),
+      eventDescription = $("#cal-description").val(),
+      correctEndDate = endDate.toUpperCase() === 'INVALID DATE' ? startDate : new Date(endDate);
+    const eventObject = {
+      title: eventTitle,
+      start: startDate,
+      end: correctEndDate,
+      description: eventDescription,
+      color: evtColor,
+      dataEventColor: eventColor,
+      allDay: true
+    }
+    $.post(url + '/update/' + window.selectedEventId, eventObject);
+
+
+    // fire an event telling the typescript that a coming event is edited so it shows a toaster
+    // to the user
+    var event = document.createEvent('Event');
+
+    // Define that the event name is 'build'.
+    event.initEvent('comingEventEdited');
+    document.dispatchEvent(event);
+
+
   });
 
   // Remove Event
@@ -104,8 +131,8 @@ const url = 'http://127.0.0.1:3000/events';
     removeEvent.remove();
 
     $.ajax({
-      url : url+'/'+window.selectedEventId,
-      method : 'delete',
+      url: url + '/' + window.selectedEventId,
+      method: 'delete',
     })
 
   });
@@ -122,8 +149,7 @@ const url = 'http://127.0.0.1:3000/events';
   $(".modal-calendar .form-control").on("keyup", function () {
     if ($(".modal-calendar #cal-event-title").val().length >= 1) {
       $(".modal-calendar .modal-footer .btn").removeAttr("disabled");
-    }
-    else {
+    } else {
       $(".modal-calendar .modal-footer .btn").attr("disabled", true);
     }
   });
@@ -188,7 +214,7 @@ const url = 'http://127.0.0.1:3000/events';
       allDay: true
     }
     calendar.addEvent(eventObject);
-    $.post(url,eventObject);
+    $.post(url, eventObject);
   });
 
   // date picker

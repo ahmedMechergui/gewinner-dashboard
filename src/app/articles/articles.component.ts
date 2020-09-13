@@ -3,6 +3,10 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {ListViewLoaderService} from '../list-view-loader.service';
 import {OrdersListManagementService} from '../orders-list-management.service';
 import {ScriptsLoaderService} from '../scripts-loader.service';
+import {Article} from '../shared/models/article.model';
+import {ArticlesHttpServiceService} from './articles-http-service.service';
+import {HostUrlService} from '../shared/services/host-url.service';
+import {ToastService} from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-articles',
@@ -11,136 +15,50 @@ import {ScriptsLoaderService} from '../scripts-loader.service';
 })
 export class ArticlesComponent implements OnInit, AfterViewInit {
 
+  url = this.urlService.url;
+  // when adding a new article we upload an image and push it to this.files array
+  // we should empty that array when we're editing another article and we use this variable
+  // to mark whether we should empty the array or not
+  articleJustAdded = false;
 
+  isDeleting = false;
+  isLoading = false;
+  isAddingNew = false;
   form: FormGroup;
   files: File[] = [];
   selectedElementIndex: number;
-  articlesArray = [
-    {
-      image: '/assets/images/articles/article-1.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Ben Ahmed',
-      date: new Date('2020-07-21'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-2.jpg',
-      title: 'We are the future',
-      author: 'John Doe',
-      date: new Date('2020-07-18'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-3.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Doe',
-      date: new Date('2020-07-06'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-1.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Ben Ahmed',
-      date: new Date('2020-07-21'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-2.jpg',
-      title: 'We are the future',
-      author: 'John Doe',
-      date: new Date('2020-07-18'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-3.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Doe',
-      date: new Date('2020-07-06'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-1.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Ben Ahmed',
-      date: new Date('2020-07-21'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-2.jpg',
-      title: 'We are the future',
-      author: 'John Doe',
-      date: new Date('2020-07-18'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-3.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Doe',
-      date: new Date('2020-07-06'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-1.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Ben Ahmed',
-      date: new Date('2020-07-21'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-2.jpg',
-      title: 'We are the future',
-      author: 'John Doe',
-      date: new Date('2020-07-18'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    },
-    {
-      image: '/assets/images/articles/article-3.jpg',
-      title: 'Tunisia e-health valley',
-      author: 'Khawla Ben Ahmed',
-      date: new Date('2020-07-06'),
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    }
-  ];
+  placeHolderArticle: Article = {
+    createdAt: null,
+    updatedAt: null,
+    id: '',
+    description: '',
+    about: '',
+    author: '',
+    title: '',
+    imageURL: ''
+  };
+  articlesArray: Article[] = [];
 
   constructor(
     private scriptsLoaderService: ScriptsLoaderService,
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService) {
+    public ordersListManagementService: OrdersListManagementService,
+    private httpRequest: ArticlesHttpServiceService,
+    public urlService: HostUrlService,
+    private toaster: ToastService) {
   }
 
   ngOnInit(): void {
+    this.getAllArticles();
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.articlesArray.reverse();
     this.ordersListManagementService.setOrdersArray(this.articlesArray);
     this.initForm();
+    this.listenToAddNew();
   }
 
   ngAfterViewInit() {
     this.loadQuillStylesheets();
-    this.loadQuillScripts();
-  }
-
-  loadQuillScripts(): void {
-    this.scriptsLoaderService.addManyScriptsAsync(
-      '/assets/vendors/js/editors/quill/katex.min.js',
-      '/assets/vendors/js/editors/quill/highlight.min.js',
-      '/assets/vendors/js/editors/quill/quill.min.js',
-      // Quill is initialized in this js file below
-      '/assets/js/scripts/pages/app-email.js'
-    ).then();
   }
 
   loadQuillStylesheets(): void {
@@ -161,10 +79,21 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     });
   }
 
+  clearForm() {
+    this.form.reset();
+  }
+
   setFormValues(): void {
+    const article = this.getSelectedArticle();
+    if (this.articleJustAdded) {
+      this.files = [];
+      this.articleJustAdded = false;
+    }
     this.form.patchValue({
-      // memberName: this.membersArray[this.selectedElementIndex].name,
-      // memberPost: this.membersArray[this.selectedElementIndex].post
+      title: article.title,
+      author: article.author,
+      introduction: article.about,
+      text: article.description
     });
   }
 
@@ -172,27 +101,77 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     this.form.reset();
   }
 
-  onSubmit(): void {
-    const values = this.form.value;
-    this.articlesArray.push({
-      title: values.title,
-      author: values.author,
-      date: new Date(),
-      image: '/assets/images/elements/no-image.jpg',
-      introduction: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, voluptatum?',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab ad adipisci aliquam, cupiditate, deleniti dignissimos eius excepturi hic id iusto magni possimus, quibusdam quis ratione saepe sunt temporibus vitae voluptatem!'
-    });
+  getSelectedArticle() {
+    if (!this.isAddingNew) {
+      return this.articlesArray[this.selectedElementIndex];
+    } else {
+      return this.placeHolderArticle;
+    }
   }
 
   onSelect(event) {
-    console.log(event);
     this.files.push(...event.addedFiles);
   }
 
   onRemove(event) {
-    console.log(event);
     this.files.splice(this.files.indexOf(event), 1);
   }
 
+  clearFiles() {
+    this.files = [];
+  }
 
+  /*=======================
+  # Http requests
+   ========================*/
+
+  getAllArticles(): void {
+    this.httpRequest.fetchAllArticles().subscribe((response: Article[]) => {
+      this.articlesArray = response;
+    });
+  }
+
+  deleteArticle(): void {
+    this.isDeleting = true;
+    this.httpRequest.deleteArticle(this.getSelectedArticle().id).subscribe(() => {
+      this.isDeleting = false;
+      this.articlesArray.splice(this.selectedElementIndex, 1);
+    }, () => {
+      this.isDeleting = false;
+      this.toaster.error('Unable to delete Article', 'Network error :');
+    });
+  }
+
+  updateArticle(): void {
+    this.isLoading = true;
+    this.httpRequest.updateArticle(this.getSelectedArticle().id, this.form.value, this.files).subscribe((updatedArticle: Article) => {
+      this.isLoading = false;
+      this.toaster.success('Article updated', 'Success');
+      this.articlesArray[this.selectedElementIndex] = updatedArticle;
+    }, () => {
+      this.isLoading = false;
+      this.toaster.error('Unable to update', 'Network error :');
+    });
+  }
+
+  // this function is listening to an event fired from /assets/js/scripts/ui/data-list-view.js
+  // it is fired when "Add New" button is clicked , because the button is written in javascript
+  listenToAddNew() {
+    document.addEventListener('add-new-clicked', () => {
+      this.selectedElementIndex = -1;
+      this.isAddingNew = true;
+      this.clearFiles();
+      this.clearForm();
+    });
+  }
+
+  addNewArticle() {
+    this.httpRequest.addNewArticle(this.form.value, this.files).subscribe((response: Article) => {
+      this.articlesArray.push(response);
+      this.toaster.success('New article added', 'Success');
+      this.articleJustAdded = true;
+    }, () => {
+      this.toaster.success('Unable to add article', 'Error :');
+    });
+  }
 }

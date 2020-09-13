@@ -48,7 +48,7 @@ $(document).on('list-script-loaded', function (event) {
           // Create the event.
           const event = document.createEvent('Event');
 
-// Define that the event name is 'build'.
+// Define that the event name is 'add-new-clicked'.
           event.initEvent('add-new-clicked', true, true);
 
 

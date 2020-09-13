@@ -21,19 +21,29 @@
             <div class="data-items pb-2">
               <div class="data-fields px-2">
                 <div class="row">
-                  <div class="col-sm-12 data-field-col">
+                  <div class="col-sm-12 data-field-col" *ngIf="articlesArray.length>0">
                     <form [formGroup]="form">
                       <label for="article-name">Title</label>
                       <input type="text" formControlName="title" class="form-control" id="article-name">
 
                       <div class="data-field-col">
                         <label for="article-author">Author</label>
-                        <input type="text" formControlName="author" class="form-control" id="article-author" >
+                        <input type="text" formControlName="author" class="form-control" id="article-author">
                       </div>
 
                       <div class="data-field-col">
                         <label for="article-introduction">Introduction</label>
-                     <textArea class="form-control" formControlName="introduction" id="article-introduction" rows="2"></textArea>
+                        <textarea rows="2" class="form-control"
+                                  style="resize: vertical" formControlName="introduction"
+                                  id="article-introduction"></textarea>
+                      </div>
+
+
+                      <div class="data-field-col">
+                        <label for="article-text">Article text</label>
+                        <textarea rows="5" class="form-control"
+                                  style="resize: vertical" formControlName="text"
+                                  id="article-text"></textarea>
                       </div>
 
                       <div id="email-container" class="data-field-col">
@@ -44,7 +54,8 @@
                       <div class="data-field-col">
                         <ngx-dropzone (change)="onSelect($event)">
                           <ngx-dropzone-label>Upload Image</ngx-dropzone-label>
-                          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f">
+                          <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files"
+                                                      [file]="f">
                             <ngx-dropzone-label></ngx-dropzone-label>
                           </ngx-dropzone-image-preview>
                         </ngx-dropzone>
@@ -56,33 +67,16 @@
                 </div>
 
 
-                <!--                    <label for="data-category"> Client </label>-->
-                <!--                    <select class="form-control" id="data-category">-->
-                <!--                      <option>Audio</option>-->
-                <!--                      <option>Computers</option>-->
-                <!--                      <option>Fitness</option>-->
-                <!--                      <option>Appliance</option>-->
-                <!--                    </select>-->
-
-                <!--                  <div class="col-sm-12 data-field-col">-->
-                <!--                    <label for="data-status">Order Status</label>-->
-                <!--                    <select class="form-control" id="data-status">-->
-                <!--                      <option>Pending</option>-->
-                <!--                      <option>Canceled</option>-->
-                <!--                      <option>Delivered</option>-->
-                <!--                    </select>-->
-                <!--                  </div>-->
-                <!--                  <div class="col-sm-12 data-field-col">-->
-                <!--                    <label for="data-price">Price</label>-->
-                <!--                    <input type="text" class="form-control" id="data-price">-->
-                <!--                  </div>-->
-
-
               </div>
             </div>
             <div class="add-data-footer d-flex justify-content-around px-3 mt-2">
               <div class="add-data-btn">
-                <button class="btn btn-primary" type="button" (click)="onSubmit()">Submit</button>
+                <button class="btn btn-primary" *ngIf="isAddingNew" type="button" (click)="addNewArticle()">
+                 <app-loader *ngIf="isLoading" radius="15"></app-loader> Add article
+                </button>
+                <button class="btn btn-primary" *ngIf="!isAddingNew" type="button" (click)="updateArticle()">
+                  <app-loader *ngIf="isLoading" radius="15"></app-loader> Update article
+                </button>
               </div>
               <div class="cancel-data-btn">
                 <button class="btn btn-outline-danger" (click)="clearFormValues()">Cancel</button>
@@ -91,21 +85,7 @@
           </div>
         </div>
 
-        <!-- DataTable starts -->
-        <div class="action-btns d-none">
-          <div class="btn-dropdown mr-1 mb-1">
-            <div class="btn-group dropdown actions-dropodown">
-              <button type="button" class="btn btn-white px-1 py-1 dropdown-toggle waves-effect waves-light"
-                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Actions
-              </button>
-              <div class="dropdown-menu order-action-buttons">
-                <a class="dropdown-item" (click)="ordersListManagementService.deleteSelectedOrders()"><i
-                  class="feather icon-trash"></i>Delete</a>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <!-- DataTable ends -->
         <!-- add new sidebar starts -->
         <div class="table-responsive">
@@ -116,21 +96,33 @@
               <th>IMAGE</th>
               <th>TITLE</th>
               <th>AUTHOR</th>
-              <th>DATE</th>
+              <th>PUBLISH DATE</th>
               <th>ACTION</th>
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let article of articlesArray; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-img action-edit" (click)="selectedElementIndex = i ; setFormValues()"><img src="{{article.image}}" alt=""></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i ; setFormValues()">&nbsp;{{article.title}}</td>
-              <td class="product-category action-edit" (click)="selectedElementIndex = i ; setFormValues()">&nbsp;{{article.author}}</td>
-              <td class="order-date action-edit" (click)="selectedElementIndex = i">{{article.date | date : 'fullDate'}}</td>
+              <td class="product-img action-edit"
+                  (click)="selectedElementIndex = i ; isAddingNew = false ; setFormValues()"><img
+                src="{{url+article.imageURL}}" alt=""></td>
+              <td class="product-name action-edit"
+                  (click)="selectedElementIndex = i ; isAddingNew = false ; setFormValues()">
+                &nbsp;{{article.title}}</td>
+              <td class="product-category action-edit"
+                  (click)="selectedElementIndex = i ;isAddingNew = false ; setFormValues()">
+                &nbsp;{{article.author}}</td>
+              <td class="order-date action-edit"
+                  (click)="selectedElementIndex = i;isAddingNew = false ">{{article.createdAt | date : 'fullDate'}}</td>
               <td class="product-action">
-                <span class="action-edit" title="Edit product" (click)="selectedElementIndex = i ; setFormValues()"><i class="feather icon-edit"></i></span>&nbsp;
+                <span class="action-edit" title="Edit product"
+                      (click)="selectedElementIndex = i ; isAddingNew = false ; setFormValues()"><i
+                  class="feather icon-edit"></i></span>&nbsp;
                 <span title="Delete product" data-toggle="modal" data-target="#danger-2"
-                      (click)="selectedElementIndex = i"><i class="feather icon-trash"></i></span>
+                      (click)="selectedElementIndex = i ;isAddingNew = false ;">
+                  <app-loader *ngIf="isDeleting && selectedElementIndex === i" radius="16"></app-loader>
+                  <i class="feather icon-trash" *ngIf="!(isDeleting && selectedElementIndex === i)"></i>
+                </span>
               </td>
             </tr>
             </tbody>
@@ -164,9 +156,9 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger waves-effect waves-light" data-dismiss="modal"
-                (click)="ordersListManagementService.deleteOrder(selectedElementIndex)">Delete
+                (click)="deleteArticle()">Delete
         </button>
-        <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal" >Cancel
+        <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-dismiss="modal">Cancel
         </button>
       </div>
     </div>

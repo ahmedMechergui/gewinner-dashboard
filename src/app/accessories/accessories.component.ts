@@ -1,5 +1,5 @@
-import {Component, OnInit, Renderer2} from '@angular/core';
-import {ScriptsLoaderService} from '../scripts-loader.service';
+import {Component, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-accessories',

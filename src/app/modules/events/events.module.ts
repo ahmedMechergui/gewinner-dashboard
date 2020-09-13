@@ -6,6 +6,7 @@ import {ComingEventsComponent} from '../../coming-events/coming-events.component
 import {ArticlesComponent} from '../../articles/articles.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgxDropzoneModule} from 'ngx-dropzone';
+import {SharedComponentsModule} from '../shared-components/shared-components.module';
 
 
 @NgModule({
@@ -13,13 +14,14 @@ import {NgxDropzoneModule} from 'ngx-dropzone';
     ComingEventsComponent,
     ArticlesComponent
   ],
-  imports: [
-    CommonModule,
-    EventsRoutingModule,
-    ReactiveFormsModule,
-    FormsModule,
-    NgxDropzoneModule
-  ]
+    imports: [
+        CommonModule,
+        EventsRoutingModule,
+        ReactiveFormsModule,
+        FormsModule,
+        NgxDropzoneModule,
+        SharedComponentsModule
+    ]
 })
 export class EventsModule {
 }
