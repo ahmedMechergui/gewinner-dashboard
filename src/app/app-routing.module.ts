@@ -5,7 +5,6 @@ import {LoginGuard} from './shared/authentication/login.guard';
 
 const routes: Routes = [
   {path: '', loadChildren: './modules/analytics/analytics.module#AnalyticsModule', pathMatch: 'full' , canActivate : [AuthGuard]},
-  {path: 'emails', loadChildren: './modules/emails/emails.module#EmailsModule' , canActivate : [AuthGuard]},
   {path: 'news', loadChildren: './modules/events/events.module#EventsModule' , canActivate : [AuthGuard]},
   {path: 'accessories', loadChildren: './modules/accessories/accessories.module#AccessoriesModule' , canActivate : [AuthGuard]},
   {path: 'moovobrain', loadChildren: './modules/moovobrain/moovobrain.module#MoovobrainModule', canActivate : [AuthGuard]},

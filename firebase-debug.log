@@ -1,0 +1,73 @@
+[debug] [2020-09-25T22:19:12.346Z] ----------------------------------------------------------------------
+[debug] [2020-09-25T22:19:12.348Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\ahmed\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-09-25T22:19:12.348Z] CLI Version:   8.4.3
+[debug] [2020-09-25T22:19:12.348Z] Platform:      win32
+[debug] [2020-09-25T22:19:12.348Z] Node Version:  v12.16.1
+[debug] [2020-09-25T22:19:12.350Z] Time:          Fri Sep 25 2020 23:19:12 GMT+0100 (British Summer Time)
+[debug] [2020-09-25T22:19:12.350Z] ----------------------------------------------------------------------
+[debug] [2020-09-25T22:19:12.350Z] 
+[debug] [2020-09-25T22:19:12.360Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-09-25T22:19:12.360Z] > authorizing via signed-in user
+[debug] [2020-09-25T22:19:12.361Z] [iam] checking project ge-admin for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-09-25T22:19:12.365Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-09-25T22:19:12.366Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-09-25T22:19:12.671Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:13 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-25T22:19:12.679Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/ge-admin:testIamPermissions  
+ {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2020-09-25T22:19:13.517Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:14 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=663","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-25T22:19:13.519Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/ge-admin  
+ 
+[debug] [2020-09-25T22:19:13.903Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:14 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'ge-admin'...
+[info] 
+[info] i  deploying hosting 
+[debug] [2020-09-25T22:19:13.912Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ge-admin/versions  
+ {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-09-25T22:19:15.267Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting[ge-admin]: beginning deploy... 
+[info] i  hosting[ge-admin]: found 1491 files in dist/dashboard 
+[debug] [2020-09-25T22:19:15.938Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ge-admin/versions/0f8e782c8c3f4697:populateFiles  
+ <request body omitted>
+[debug] [2020-09-25T22:19:16.008Z] [hosting] hash cache [ZGlzdFxkYXNoYm9hcmQ] stored for 1491 files
+[debug] [2020-09-25T22:19:16.009Z] [hosting][hash queue][FINAL] {"max":12,"min":0,"avg":3.7828376948974234,"active":0,"complete":1491,"success":1491,"errored":0,"retried":0,"total":1491,"elapsed":229}
+[debug] [2020-09-25T22:19:16.009Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ge-admin/versions/0f8e782c8c3f4697:populateFiles  
+ <request body omitted>
+[debug] [2020-09-25T22:19:18.330Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:18 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-25T22:19:18.620Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:19 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-25T22:19:18.621Z] [hosting][populate queue][FINAL] {"max":2683,"min":2326,"avg":2504.5,"active":0,"complete":2,"success":2,"errored":0,"retried":0,"total":2,"elapsed":2683}
+[debug] [2020-09-25T22:19:18.621Z] [hosting] uploads queued: 0
+[debug] [2020-09-25T22:19:18.622Z] [hosting][upload queue][FINAL] {"max":0,"min":9999999999,"avg":0,"active":0,"complete":0,"success":0,"errored":0,"retried":0,"total":0,"elapsed":1601072358622}
+[info] +  hosting[ge-admin]: file upload complete 
+[debug] [2020-09-25T22:19:18.626Z] [hosting] deploy completed after 3356ms
+[debug] [2020-09-25T22:19:18.840Z] [
+  {
+    "config": {
+      "public": "dist/dashboard",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "ge-admin"
+    },
+    "site": "ge-admin",
+    "version": "sites/ge-admin/versions/0f8e782c8c3f4697"
+  }
+]
+[info] i  hosting[ge-admin]: finalizing version... 
+[debug] [2020-09-25T22:19:18.843Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/ge-admin/versions/0f8e782c8c3f4697?updateMask=status  
+ {"status":"FINALIZED"}
+[debug] [2020-09-25T22:19:19.953Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Fri, 25 Sep 2020 22:19:20 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-27=\":443\"; ma=2592000,h3-T051=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-09-25T22:19:19.954Z] [hosting] finalized version for ge-admin: {"name":"sites/ge-admin/versions/0f8e782c8c3f4697","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2020-09-25T22:19:15.392918Z","createUser":{"email":"ahmed.mechergui636@gmail.com"},"finalizeTime":"2020-09-25T22:19:20.480557Z","finalizeUser":{"email":"ahmed.mechergui636@gmail.com"}}
+[info] +  hosting[ge-admin]: version finalized 
+[info] i  hosting[ge-admin]: releasing new version... 
+[debug] [2020-09-25T22:19:19.959Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/ge-admin/releases?version_name=sites/ge-admin/versions/0f8e782c8c3f4697  
+ {"message":null}

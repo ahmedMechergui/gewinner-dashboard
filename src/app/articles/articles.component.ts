@@ -168,7 +168,7 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
   addNewArticle() {
     this.httpRequest.addNewArticle(this.form.value, this.files).subscribe((response: Article) => {
       this.articlesArray.push(response);
-      this.toaster.success('New article added', 'Success');
+      this.toaster.success('New article has been added', 'Success');
       this.articleJustAdded = true;
     }, () => {
       this.toaster.success('Unable to add article', 'Error :');

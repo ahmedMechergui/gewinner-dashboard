@@ -8,7 +8,6 @@ import {HeaderComponent} from './header/header.component';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import {FooterComponent} from './footer/footer.component';
-import {EmailsModule} from './modules/emails/emails.module';
 import {EventsModule} from './modules/events/events.module';
 import {AnalyticsModule} from './modules/analytics/analytics.module';
 import {AccessoriesModule} from './modules/accessories/accessories.module';
@@ -37,7 +36,6 @@ import {ToastrModule} from 'ngx-toastr';
     RouterModule,
     AppRoutingModule,
     AnalyticsModule,
-    EmailsModule,
     EventsModule,
     AccessoriesModule,
     MoovobrainModule,
