@@ -40,7 +40,7 @@
               </td>
               <td class="order-date action-edit" (click)="selectedElementIndex = i">{{request.interviewDate ? (request.interviewDate | date : 'fullDate') : ''}}</td>
               <td class="product-name" (click)="selectedElementIndex = i">
-                <a href="{{url+request.cvURL}}" target="_blank"><button class="btn btn-primary">View CV</button></a></td>
+                <a href="{{url+request.cvURL}}" target="_blank"><button class="btn btn-primary text-nowrap">View CV</button></a></td>
               <td class="product-action">
                 <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i class="feather icon-eye"></i></span>&nbsp;
                 <span title="Schedule interview date" data-toggle="modal" data-target="#success" (click)="selectedElementIndex = i"><i class="feather icon-calendar"></i></span>&nbsp;

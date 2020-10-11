@@ -26,7 +26,7 @@ export class JobInternshipRequestComponent implements OnInit {
 
   fetchApplications() {
     this.requestsHttp.getAllJoinUsRequests().subscribe((res: Array<JoinUsApplication>) => {
-      this.requestsArray = res;
+      this.requestsArray = res.reverse();
     }, () => {
       this.toaster.error('Cannot fetch applications', 'Error');
     });
@@ -39,8 +39,7 @@ export class JobInternshipRequestComponent implements OnInit {
   ngOnInit(): void {
     this.fetchApplications();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
-    this.requestsArray.reverse();
+    this.listViewLoaderService.loadDataListViewScript().then();;
   }
 
   setScheduledDate(dateElement: HTMLInputElement): void {

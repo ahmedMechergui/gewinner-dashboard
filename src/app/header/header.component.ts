@@ -29,6 +29,4 @@ export class HeaderComponent implements OnInit {
       closeButton: true
     });
   }
-
-
 }

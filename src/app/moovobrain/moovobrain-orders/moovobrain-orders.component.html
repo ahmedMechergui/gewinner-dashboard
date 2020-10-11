@@ -31,9 +31,10 @@
                   (click)="selectedElementIndex = i">{{order.createdAt | date : 'fullDate'}}</td>
               <td class="action-edit" (click)="selectedElementIndex = i">
                 <div class="chip chip-warning"
+                     [class.chip-secondary]="order.status === 'submitted'"
                      [class.chip-warning]="order.status === 'pending'"
                      [class.chip-danger]="order.status === 'rejected'"
-                     [class.chip-success]="order.status === 'delivered'">
+                     [class.chip-success]="order.status === 'validated'">
                   <div class="chip-body action-edit">
                     <div class="chip-text">{{order.status}}</div>
                   </div>

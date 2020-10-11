@@ -7,6 +7,10 @@
  color: #626262;
 }
 
+.action-edit {
+  white-space: nowrap !important;
+}
+
 .order-action-buttons{
   cursor: pointer;
 }
@@ -128,3 +132,5 @@ ngx-dropzone-label {
 .bullets-group-1 {
   display: none !important;
 }
+
+
