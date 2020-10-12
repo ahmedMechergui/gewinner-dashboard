@@ -22,7 +22,6 @@ export class AccessoriesOrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
     this.fetchOrders();
   }
 
@@ -34,6 +33,7 @@ export class AccessoriesOrdersComponent implements OnInit {
     this.httpRequest.getAllAccessoriesOrders()
       .subscribe((res: Array<AccessorieOrder>) => {
         this.ordersArray = res.slice().reverse();
+        this.listViewLoaderService.loadDataListViewScript().then();
       }, () => {
         this.toaster.error('Unable to fetch orders', 'Error :');
       });

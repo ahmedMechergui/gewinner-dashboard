@@ -21,9 +21,12 @@ export class ClientsRequestsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this way we guarantee that we load the scripts
+    // every time we init this component and data is already fetched
+    if (this.httpRequest.requestsFetched >= 3){
+      this.listViewLoaderService.loadDataListViewScript().then();
+    }
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
-    this.servicesArray.reverse();
     this.servicesArray = this.httpRequest.serviceRequestsArray;
     this.httpRequest.getAllServiceRequests();
   }

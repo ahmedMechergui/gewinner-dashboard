@@ -50,7 +50,6 @@ export class AccessoriesProductsComponent implements OnInit {
     this.fetchAccessories();
     this.listenToAddNew();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
   }
 
   initForm(): void {
@@ -151,6 +150,7 @@ export class AccessoriesProductsComponent implements OnInit {
   fetchAccessories(): void {
     this.httpRequests.getAllAccessories().subscribe((res: Accessorie[]) => {
       this.productsArray = res.slice().reverse();
+      this.listViewLoaderService.loadDataListViewScript().then();
       this.initForm();
       this.nullToInfinity();
     }, () => {

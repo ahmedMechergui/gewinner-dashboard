@@ -25,7 +25,6 @@ export class MoovobrainOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.fetchOrders();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
     this.ordersArray.reverse();
   }
 
@@ -41,6 +40,7 @@ export class MoovobrainOrdersComponent implements OnInit {
   fetchOrders() {
     this.httpRequest.getAllOrders().subscribe((orders: MoovobrainOrder[]) => {
       this.ordersArray = orders.reverse();
+      this.listViewLoaderService.loadDataListViewScript().then();
     }, () => {
       this.toaster.error('Unable to fetch orders', 'Error :');
     });

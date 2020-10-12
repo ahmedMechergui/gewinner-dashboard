@@ -49,7 +49,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getAllArticles();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
     this.initForm();
     this.listenToAddNew();
   }
@@ -124,6 +123,7 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
 
   getAllArticles(): void {
     this.httpRequest.fetchAllArticles().subscribe((response: Article[]) => {
+      this.listViewLoaderService.loadDataListViewScript().then();
       this.articlesArray = response;
     });
   }

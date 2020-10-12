@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HostUrlService} from '../shared/services/host-url.service';
 import {HttpClient} from '@angular/common/http';
 import {ServiceRequest} from '../shared/models/service-request.model';
+import {ListViewLoaderService} from '../list-view-loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ClientRequestsHttpService {
   // when a type fetched and will have the value of 3 when all of them is fetched
   requestsFetched = 0;
 
-  constructor(private urlService: HostUrlService, private http: HttpClient) {
+  constructor(private urlService: HostUrlService, private http: HttpClient, private listViewLoaderService: ListViewLoaderService) {
   }
 
   getAllServiceRequests() {
@@ -44,6 +45,8 @@ export class ClientRequestsHttpService {
     if (this.requestsFetched >= 3) {
       // @ts-ignore
       this.serviceRequestsArray = this.serviceRequestsArray.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+      this.listViewLoaderService.loadDataListViewScript().then();
+      this.serviceRequestsArray.reverse();
     }
   }
 
