@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../../list-view-loader.service';
-import {OrdersListManagementService} from '../../orders-list-management.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {AccessoriesRequestHttpService} from '../accessories-request-http.service';
 import {Accessorie} from '../../shared/models/accessorie.model';
@@ -38,7 +37,6 @@ export class AccessoriesProductsComponent implements OnInit {
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService,
     private httpRequests: AccessoriesRequestHttpService,
     private urlService: HostUrlService,
     private toaster: ToastService) {
@@ -53,7 +51,6 @@ export class AccessoriesProductsComponent implements OnInit {
     this.listenToAddNew();
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.ordersListManagementService.setOrdersArray(this.productsArray);
   }
 
   initForm(): void {

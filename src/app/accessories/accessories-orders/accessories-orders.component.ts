@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../../list-view-loader.service';
-import {OrdersListManagementService} from '../../orders-list-management.service';
 import {AccessorieOrder} from '../../shared/models/accessorieOrder.model';
 import {AccessoriesRequestHttpService} from '../accessories-request-http.service';
 import {ToastService} from '../../shared/services/toast.service';
@@ -17,7 +16,6 @@ export class AccessoriesOrdersComponent implements OnInit {
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService,
     private httpRequest: AccessoriesRequestHttpService,
     private toaster: ToastService) {
   }
@@ -25,7 +23,6 @@ export class AccessoriesOrdersComponent implements OnInit {
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.ordersListManagementService.setOrdersArray(this.ordersArray);
     this.fetchOrders();
   }
 

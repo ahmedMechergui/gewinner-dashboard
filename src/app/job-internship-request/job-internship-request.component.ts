@@ -39,7 +39,7 @@ export class JobInternshipRequestComponent implements OnInit {
   ngOnInit(): void {
     this.fetchApplications();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();;
+    this.listViewLoaderService.loadDataListViewScript().then();
   }
 
   setScheduledDate(dateElement: HTMLInputElement): void {

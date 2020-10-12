@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../../list-view-loader.service';
-import {OrdersListManagementService} from '../../orders-list-management.service';
 import {MoovobrainRequestHttpService} from '../moovobrain-request-http.service';
 import {MoovobrainOrder} from '../../shared/models/moovobrain-order.model';
 import {ToastService} from '../../shared/services/toast.service';
@@ -20,7 +19,6 @@ export class MoovobrainOrdersComponent implements OnInit {
   constructor(
     private listViewLoaderService: ListViewLoaderService,
     private toaster: ToastService,
-    public ordersListManagementService: OrdersListManagementService,
     private httpRequest: MoovobrainRequestHttpService) {
   }
 
@@ -29,7 +27,6 @@ export class MoovobrainOrdersComponent implements OnInit {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
     this.ordersArray.reverse();
-    this.ordersListManagementService.setOrdersArray(this.ordersArray);
   }
 
   getSelectedOrder(): MoovobrainOrder {

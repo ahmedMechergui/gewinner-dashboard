@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ListViewLoaderService} from '../list-view-loader.service';
-import {OrdersListManagementService} from '../orders-list-management.service';
 import {TeamMembersHttpService} from './team-members-http.service';
 import {TeamMember} from '../shared/models/team-member.model';
 import {ToastService} from '../shared/services/toast.service';
@@ -24,15 +23,12 @@ export class TeamMembersComponent implements OnInit {
     public urlService: HostUrlService,
     private httpRequest: TeamMembersHttpService,
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService,
     private toaster: ToastService) {
   }
 
   ngOnInit(): void {
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
     this.getAllTeamMembers();
-    this.ordersListManagementService.setOrdersArray(this.membersArray);
     this.initForm();
     this.listenToAddNew();
   }
@@ -76,6 +72,7 @@ export class TeamMembersComponent implements OnInit {
   getAllTeamMembers(): void {
     this.httpRequest.getAllTeamMembers().subscribe((teamMembers: Array<TeamMember>) => {
       this.membersArray = teamMembers.slice().reverse();
+      this.listViewLoaderService.loadDataListViewScript().then();
     }, () => {
       this.toaster.error('Unable to fetch team members', 'Error :');
     });

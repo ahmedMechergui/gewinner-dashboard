@@ -1,8 +1,6 @@
 $(document).on('list-script-loaded', function (event) {
   "use strict"
 
-
-  console.log('script loaded');
   // init list view datatable
   var dataListView = $(".data-list-view").DataTable({
     responsive: false,
@@ -65,7 +63,7 @@ $(document).on('list-script-loaded', function (event) {
 
   dataListView.on('draw.dt', function () {
     setTimeout(function () {
-      if (navigator.userAgent.indexOf("Mac OS X") != -1) {
+      if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
         $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
       }
     }, 50);
@@ -113,7 +111,7 @@ $(document).on('list-script-loaded', function (event) {
 
   dataThumbView.on('draw.dt', function () {
     setTimeout(function () {
-      if (navigator.userAgent.indexOf("Mac OS X") != -1) {
+      if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
         $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
       }
     }, 50);
@@ -140,24 +138,20 @@ $(document).on('list-script-loaded', function (event) {
   // On Edit
   $('.action-edit').on("click", function (e) {
     e.stopPropagation();
-    // $('#data-name').val('Altec Lansing - Bluetooth Speaker');
-    // $('#data-price').val('$99');
     $(".add-new-data").addClass("show");
     $(".overlay-bg").addClass("show");
   });
 
   // On Delete
   $('.action-delete').on("click", function (e) {
-    // e.stopPropagation();
     $(this).closest('td').parent('tr').fadeOut();
   });
 
 
   // mac chrome checkbox fix
-  if (navigator.userAgent.indexOf("Mac OS X") != -1) {
+  if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
     $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
   }
   document.eventListeners('list-script-loaded').stopPropagation();
-
 
 })

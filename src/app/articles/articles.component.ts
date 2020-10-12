@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {ListViewLoaderService} from '../list-view-loader.service';
-import {OrdersListManagementService} from '../orders-list-management.service';
 import {ScriptsLoaderService} from '../scripts-loader.service';
 import {Article} from '../shared/models/article.model';
 import {ArticlesHttpServiceService} from './articles-http-service.service';
@@ -42,7 +41,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
   constructor(
     private scriptsLoaderService: ScriptsLoaderService,
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService,
     private httpRequest: ArticlesHttpServiceService,
     public urlService: HostUrlService,
     private toaster: ToastService) {
@@ -52,7 +50,6 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     this.getAllArticles();
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
-    this.ordersListManagementService.setOrdersArray(this.articlesArray);
     this.initForm();
     this.listenToAddNew();
   }

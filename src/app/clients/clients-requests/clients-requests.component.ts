@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {ListViewLoaderService} from '../../list-view-loader.service';
-import {OrdersListManagementService} from '../../orders-list-management.service';
 import {ClientRequestsHttpService} from '../client-requests-http.service';
 import {ServiceRequest} from '../../shared/models/service-request.model';
 import {ToastService} from '../../shared/services/toast.service';
@@ -13,13 +12,10 @@ import {ToastService} from '../../shared/services/toast.service';
 export class ClientsRequestsComponent implements OnInit {
 
   selectedElementIndex = 0;
-  servicesArray: ServiceRequest[] = [
-    // {type: 'Quality control', client: 'Ahmed Mechergui', date: new Date('2020-7-23'), status: 'pending'},
-  ];
+  servicesArray: ServiceRequest[] = [];
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
-    public ordersListManagementService: OrdersListManagementService,
     private httpRequest: ClientRequestsHttpService,
     private toaster: ToastService) {
   }
@@ -28,7 +24,6 @@ export class ClientsRequestsComponent implements OnInit {
     this.listViewLoaderService.loadStylesheets();
     this.listViewLoaderService.loadDataListViewScript().then();
     this.servicesArray.reverse();
-    this.ordersListManagementService.setOrdersArray(this.servicesArray);
     this.servicesArray = this.httpRequest.serviceRequestsArray;
     this.httpRequest.getAllServiceRequests();
   }
