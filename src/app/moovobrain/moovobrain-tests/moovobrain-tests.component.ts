@@ -24,7 +24,6 @@ export class MoovobrainTestsComponent implements OnInit {
   ngOnInit(): void {
     this.fetchTests();
     this.listViewLoaderService.loadStylesheets();
-    this.listViewLoaderService.loadDataListViewScript().then();
   }
 
   setScheduledDate(dateElement: HTMLInputElement): void {
@@ -49,6 +48,7 @@ export class MoovobrainTestsComponent implements OnInit {
   fetchTests() {
     this.httpRequest.getAllTestRequests().subscribe((tests: MoovobrainTest[]) => {
       this.testsArray = tests.slice().reverse();
+      this.listViewLoaderService.loadDataListViewScript().then();
     });
   }
 
