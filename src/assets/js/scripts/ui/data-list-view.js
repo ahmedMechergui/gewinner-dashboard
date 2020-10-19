@@ -152,6 +152,7 @@ $(document).on('list-script-loaded', function (event) {
   if (navigator.userAgent.indexOf("Mac OS X") !== -1) {
     $(".dt-checkboxes-cell input, .dt-checkboxes").addClass("mac-checkbox")
   }
-  document.eventListeners('list-script-loaded').stopPropagation();
 
+  // document.eventListeners('list-script-loaded').stopPropagation();
+  event.stopImmediatePropagation();
 })
