@@ -25,10 +25,10 @@
             <tbody>
             <tr *ngFor="let request of requestsArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">{{request.applyType}}</td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">{{request.name}}</td>
-              <td class="order-date action-edit" (click)="selectedElementIndex = i">{{request.createdAt | date : 'fullDate'}}</td>
-              <td class="action-edit" (click)="selectedElementIndex = i">
+              <td class="product-name action-edit" (click)="listItemClicked(i)">{{request.applyType}}</td>
+              <td class="product-name action-edit" (click)="listItemClicked(i)">{{request.name}}</td>
+              <td class="order-date action-edit" (click)="listItemClicked(i)">{{request.createdAt | date : 'fullDate'}}</td>
+              <td class="action-edit" (click)="listItemClicked(i)">
                 <div class="chip chip-warning"
                      [class.chip-warning]="request.status === 'pending'"
                      [class.chip-success]="request.status === 'processed'"
@@ -38,11 +38,11 @@
                   </div>
                 </div>
               </td>
-              <td class="order-date action-edit" (click)="selectedElementIndex = i">{{request.interviewDate ? (request.interviewDate | date : 'fullDate') : ''}}</td>
-              <td class="product-name" (click)="selectedElementIndex = i">
+              <td class="order-date action-edit" (click)="listItemClicked(i)">{{request.interviewDate ? (request.interviewDate | date : 'fullDate') : ''}}</td>
+              <td class="product-name" (click)="selectedElementIndex = i ">
                 <a href="{{url+request.cvURL}}" target="_blank"><button class="btn btn-primary text-nowrap">View CV</button></a></td>
               <td class="product-action">
-                <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i class="feather icon-eye"></i></span>&nbsp;
+                <span class="action-edit" title="More information" (click)="listItemClicked(i)"><i class="feather icon-eye"></i></span>&nbsp;
                 <span title="Schedule interview date" data-toggle="modal" data-target="#success" (click)="selectedElementIndex = i"><i class="feather icon-calendar"></i></span>&nbsp;
                 <span title="Mark as processed" (click)="selectedElementIndex = i ; setApplicationStatus('processed')" ><i class="feather icon-check"></i></span>&nbsp;
 <!--                <span title="Reject request"><i class="feather icon-slash" data-toggle="modal" data-target="#danger" (click)="selectedElementIndex = i"></i></span>&nbsp;-->

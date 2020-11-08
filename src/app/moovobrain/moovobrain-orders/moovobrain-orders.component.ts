@@ -32,6 +32,11 @@ export class MoovobrainOrdersComponent implements OnInit {
     return this.ordersArray[this.selectedElementIndex];
   }
 
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.listViewLoaderService.fireEventEditClicked();
+  }
+
 
   /*========================
     # HTTP requests

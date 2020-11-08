@@ -113,7 +113,7 @@
                   (click)="selectedElementIndex = i ;isAddingNew = false ; setFormValues()">
                 &nbsp;{{article.author}}</td>
               <td class="order-date action-edit"
-                  (click)="selectedElementIndex = i;isAddingNew = false ">{{article.createdAt | date : 'fullDate'}}</td>
+                  (click)="selectedElementIndex = i;isAddingNew = false ; setFormValues()">{{article.createdAt | date : 'fullDate'}}</td>
               <td class="product-action">
                 <span class="action-edit" title="Edit product"
                       (click)="selectedElementIndex = i ; isAddingNew = false ; setFormValues()"><i

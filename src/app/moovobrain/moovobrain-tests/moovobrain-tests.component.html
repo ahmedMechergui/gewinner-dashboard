@@ -27,11 +27,11 @@
             <tbody>
             <tr *ngFor="let test of testsArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">{{test.name}}</td>
-              <td class="product-category action-edit" (click)="selectedElementIndex = i">{{test.clientNature}}</td>
+              <td class="product-name action-edit" (click)="listItemClicked(i)">{{test.name}}</td>
+              <td class="product-category action-edit" (click)="listItemClicked(i)">{{test.clientNature}}</td>
               <td class="order-date action-edit"
-                  (click)="selectedElementIndex = i">{{test.createdAt | date : 'fullDate'}}</td>
-              <td class="action-edit" (click)="selectedElementIndex = i">
+                  (click)="listItemClicked(i)">{{test.createdAt | date : 'fullDate'}}</td>
+              <td class="action-edit" (click)="listItemClicked(i)">
                 <div class="chip chip-warning"
                      [class.chip-warning]="test.status === 'pending'"
                      [class.chip-danger]="test.status === 'rejected'"
@@ -43,10 +43,10 @@
                 </div>
               </td>
               <td class="order-date action-edit"
-                  (click)="selectedElementIndex = i">{{test.scheduledDate ? (test.scheduledDate | date : 'fullDate') : ''}}</td>
-              <!--              <td class="product-price action-edit" (click)="selectedElementIndex = i">{{test.price}}&nbsp;dt</td>-->
+                  (click)="listItemClicked(i)">{{test.scheduledDate ? (test.scheduledDate | date : 'fullDate') : ''}}</td>
+              <!--              <td class="product-price action-edit" (click)="listItemClicked(i)">{{test.price}}&nbsp;dt</td>-->
               <td class="product-action">
-                <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i
+                <span class="action-edit" title="More information" (click)="listItemClicked(i)"><i
                   class="feather icon-eye"></i></span>&nbsp;
                 <span title="Schedule date" data-toggle="modal" data-target="#success"
                       (click)="selectedElementIndex = i"><i class="feather icon-calendar"></i></span>&nbsp;

@@ -25,11 +25,11 @@
             <tbody>
             <tr *ngFor="let order of ordersArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">Moovobrain</td>
-              <td class="product-category action-edit" (click)="selectedElementIndex = i">{{order.clientNature}}</td>
+              <td class="product-name action-edit" (click)="listItemClicked(i)">Moovobrain</td>
+              <td class="product-category action-edit" (click)="listItemClicked(i)">{{order.clientNature}}</td>
               <td class="order-date action-edit"
-                  (click)="selectedElementIndex = i">{{order.createdAt | date : 'fullDate'}}</td>
-              <td class="action-edit" (click)="selectedElementIndex = i">
+                  (click)="listItemClicked(i)">{{order.createdAt | date : 'fullDate'}}</td>
+              <td class="action-edit" (click)="listItemClicked(i)">
                 <div class="chip chip-warning"
                      [class.chip-secondary]="order.status === 'submitted'"
                      [class.chip-warning]="order.status === 'pending'"
@@ -40,9 +40,9 @@
                   </div>
                 </div>
               </td>
-              <td class="product-price action-edit" (click)="selectedElementIndex = i">{{order.price}}&nbsp;dt</td>
+              <td class="product-price action-edit" (click)="listItemClicked(i)">{{order.price}}&nbsp;dt</td>
               <td class="product-action">
-                <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i
+                <span class="action-edit" title="More information" (click)="listItemClicked(i)"><i
                   class="feather icon-eye"></i></span>&nbsp;
                 <span title="Confirm order" data-toggle="modal" data-target="#success"
                       (click)="selectedElementIndex = i"><i class="feather icon-check"></i></span>&nbsp;

@@ -23,7 +23,7 @@ export class ClientsRequestsComponent implements OnInit {
   ngOnInit(): void {
     // this way we guarantee that we load the scripts
     // every time we init this component and data is already fetched
-    if (this.httpRequest.requestsFetched >= 3){
+    if (this.httpRequest.requestsFetched >= 3) {
       this.listViewLoaderService.loadDataListViewScript().then();
     }
     this.listViewLoaderService.loadStylesheets();
@@ -33,6 +33,11 @@ export class ClientsRequestsComponent implements OnInit {
 
   getSelectedElement() {
     return this.servicesArray[this.selectedElementIndex];
+  }
+
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.listViewLoaderService.fireEventEditClicked();
   }
 
   /*==================

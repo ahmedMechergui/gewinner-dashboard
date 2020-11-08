@@ -29,6 +29,15 @@ export class AccessoriesOrdersComponent implements OnInit {
     return this.ordersArray[this.selectedElementIndex];
   }
 
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.listViewLoaderService.fireEventEditClicked();
+  }
+
+  /*=======================
+  # Http requests
+   =======================*/
+
   fetchOrders() {
     this.httpRequest.getAllAccessoriesOrders()
       .subscribe((res: Array<AccessorieOrder>) => {

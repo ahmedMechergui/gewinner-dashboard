@@ -40,6 +40,11 @@ export class MoovobrainTestsComponent implements OnInit {
     return this.testsArray[this.selectedElementIndex];
   }
 
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.listViewLoaderService.fireEventEditClicked();
+  }
+
 
   /*===========================
     # Http requests

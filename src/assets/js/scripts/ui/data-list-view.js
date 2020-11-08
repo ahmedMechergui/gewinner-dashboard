@@ -4,6 +4,7 @@ $(document).on('list-script-loaded', function (event) {
   // init list view datatable
   var dataListView = $(".data-list-view").DataTable({
     responsive: false,
+    retrieve: true,
     columnDefs: [
       {
         orderable: true,
@@ -17,11 +18,11 @@ $(document).on('list-script-loaded', function (event) {
       sLengthMenu: "_MENU_",
       sSearch: ""
     },
-    aLengthMenu: [[10, 15, 20, 30], [10, 15, 20, 30]],
+    aLengthMenu: [[5,10, 15, 20, 30], [5,10, 15, 20, 30]],
 // Incommenting the code below will make list element get a meaning styling when they are clicked
-    // select: {
-    //   style: "multi"
-    // },
+//     select: {
+//       style: "multi"
+//     },
     /*
     script line was initially sorting list elements by name , uncommenting the line below will bring
     back that behavior
@@ -142,6 +143,13 @@ $(document).on('list-script-loaded', function (event) {
     $(".overlay-bg").addClass("show");
   });
 
+  // On Edit Second pagination , this function fixing
+  $(document).on("edit-clicked", function (e) {
+    e.stopPropagation();
+    $(".add-new-data").addClass("show");
+    $(".overlay-bg").addClass("show");
+  });
+
   // On Delete
   $('.action-delete').on("click", function (e) {
     $(this).closest('td').parent('tr').fadeOut();
@@ -154,5 +162,5 @@ $(document).on('list-script-loaded', function (event) {
   }
 
   // document.eventListeners('list-script-loaded').stopPropagation();
-  event.stopImmediatePropagation();
+  // event.stopImmediatePropagation();
 })

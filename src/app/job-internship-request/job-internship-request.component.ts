@@ -24,6 +24,16 @@ export class JobInternshipRequestComponent implements OnInit {
   ) {
   }
 
+  ngOnInit(): void {
+    this.fetchApplications();
+    this.listViewLoaderService.loadStylesheets();
+  }
+
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.listViewLoaderService.fireEventEditClicked();
+  }
+
   fetchApplications() {
     this.requestsHttp.getAllJoinUsRequests().subscribe((res: Array<JoinUsApplication>) => {
       this.requestsArray = res.reverse();
@@ -37,10 +47,7 @@ export class JobInternshipRequestComponent implements OnInit {
     return this.requestsArray[this.selectedElementIndex];
   }
 
-  ngOnInit(): void {
-    this.fetchApplications();
-    this.listViewLoaderService.loadStylesheets();
-  }
+
 
   setScheduledDate(dateElement: HTMLInputElement): void {
     if (dateElement.value) {

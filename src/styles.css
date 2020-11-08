@@ -133,4 +133,9 @@ ngx-dropzone-label {
   display: none !important;
 }
 
-
+/* =======================
+    # Prevent line break in list items
+   ======================= */
+.product-action , .product-name , .action-edit {
+  white-space: nowrap;
+}

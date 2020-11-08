@@ -126,12 +126,17 @@ export class AccessoriesProductsComponent implements OnInit {
     this.form.reset();
   }
 
+  listItemClicked(i: number) {
+    this.selectedElementIndex = i;
+    this.isAddingNew = false;
+    this.listViewLoaderService.fireEventEditClicked();
+  }
+
+// these three functions are related to the image upload
 
   clearFiles() {
     this.files = [];
   }
-
-  // these two function are related to the image upload
 
   onSelect(event) {
     this.files.push(...event.addedFiles);
@@ -208,7 +213,7 @@ export class AccessoriesProductsComponent implements OnInit {
     this.isLoading = true;
     this.httpRequests.addAccessorie(this.form.value, this.files).subscribe((accessorie: Accessorie) => {
       this.isLoading = false;
-      if (accessorie.availableQuantity === null){
+      if (accessorie.availableQuantity === null) {
         accessorie.availableQuantity = Infinity;
       }
       this.productsArray.push(accessorie);

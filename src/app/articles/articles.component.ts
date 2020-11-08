@@ -53,6 +53,9 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     this.listenToAddNew();
   }
 
+  fixPagination() {
+  }
+
   ngAfterViewInit() {
     this.loadQuillStylesheets();
   }
@@ -80,6 +83,7 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
   }
 
   setFormValues(): void {
+    this.listViewLoaderService.fireEventEditClicked();
     const article = this.getSelectedArticle();
     if (this.articleJustAdded) {
       this.files = [];
@@ -117,13 +121,18 @@ export class ArticlesComponent implements OnInit, AfterViewInit {
     this.files = [];
   }
 
+
+
+
   /*=======================
   # Http requests
    ========================*/
 
   getAllArticles(): void {
     this.httpRequest.fetchAllArticles().subscribe((response: Article[]) => {
-      this.listViewLoaderService.loadDataListViewScript().then();
+      this.listViewLoaderService.loadDataListViewScript().then(() => {
+        this.fixPagination();
+      });
       this.articlesArray = response;
     });
   }

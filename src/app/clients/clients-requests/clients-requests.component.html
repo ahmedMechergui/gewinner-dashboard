@@ -25,12 +25,12 @@
             <tbody>
             <tr *ngFor="let service of servicesArray ; let i = index" [id]="'order-'+i">
               <td></td>
-              <td class="product-name action-edit" (click)="selectedElementIndex = i">{{service.type}}</td>
+              <td class="product-name action-edit" (click)="listItemClicked(i)">{{service.type}}</td>
               <td class="product-category action-edit"
-                  (click)="selectedElementIndex = i">{{service.owner ? service.owner.name : service.name}}</td>
+                  (click)="listItemClicked(i)">{{service.owner ? service.owner.name : service.name}}</td>
               <td class="order-date action-edit"
-                  (click)="selectedElementIndex = i">{{service.createdAt | date : 'fullDate'}}</td>
-              <td class="action-edit" (click)="selectedElementIndex = i">
+                  (click)="listItemClicked(i)">{{service.createdAt | date : 'fullDate'}}</td>
+              <td class="action-edit" (click)="listItemClicked(i)">
                 <div class="chip chip-warning"
                      [class.chip-warning]="service.status === 'pending'"
                      [class.chip-danger]="service.status === 'rejected'"
@@ -40,9 +40,9 @@
                   </div>
                 </div>
               </td>
-              <!--              <td class="product-price action-edit" (click)="selectedElementIndex = i">{{order.price}}&nbsp;dt</td>-->
+
               <td class="product-action">
-                <span class="action-edit" title="More information" (click)="selectedElementIndex = i"><i
+                <span class="action-edit" title="More information" (click)="listItemClicked(i)"><i
                   class="feather icon-eye"></i></span>&nbsp;
                 <span title="Confirm order" data-toggle="modal" data-target="#success"
                       (click)="selectedElementIndex = i"><i class="feather icon-check"></i></span>&nbsp;
@@ -91,7 +91,7 @@
                     <hr>
                     <label class="text-dark text-bold-600">Client Phone</label>
                     <p
-                      class="text-62">{{getSelectedElement().owner ? getSelectedElement().owner.phone.length > 0 ? getSelectedElement().owner.phone : 'not provided' : getSelectedElement().phone.length > 0 ? getSelectedElement().phone : 'not provided'}}</p>
+                      class="text-62">{{getSelectedElement().owner ? getSelectedElement().owner.phone.length > 0 ? getSelectedElement().owner.phone : 'Not provided' : getSelectedElement().phone.length > 0 ? getSelectedElement().phone : 'not provided'}}</p>
 
                     <div *ngIf="getSelectedElement().type === 'Training session'">
                       <hr>
