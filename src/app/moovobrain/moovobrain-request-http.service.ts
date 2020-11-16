@@ -23,6 +23,10 @@ export class MoovobrainRequestHttpService {
     return this.http.post(this.url + '/moovobrain/' + id, {status});
   }
 
+  validateOrder(id: string, priceShipping: number, priceTaxes: number) {
+    return this.http.post(this.url + '/moovobrain-validate/' + id, {priceShipping, priceTaxes});
+  }
+
   deleteOrder(id: string) {
     return this.http.delete(this.url + '/moovobrain/' + id);
   }

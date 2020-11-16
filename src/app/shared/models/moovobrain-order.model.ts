@@ -1,7 +1,12 @@
 export interface MoovobrainOrder {
   id: string;
+  mode: string;
   status: string;
-  price: number;
+  pricePurchase: number;
+  priceShipping: number;
+  priceTaxes: number;
+  priceTotal: number;
+  quantity: number;
 //  Wheelchair
   steeringSystem: boolean;
   headset: boolean;

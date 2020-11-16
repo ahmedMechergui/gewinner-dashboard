@@ -14,7 +14,8 @@ export class MoovobrainOrdersComponent implements OnInit {
   ordersArray: MoovobrainOrder[] = [];
   // we provide this variable when the column is not specified
   none = 'not specified';
-
+  isValidationLoading = false;
+  isShippingLoading = false;
 
   constructor(
     private listViewLoaderService: ListViewLoaderService,
@@ -52,11 +53,30 @@ export class MoovobrainOrdersComponent implements OnInit {
   }
 
   updateOrderStatus(status: string) {
+    if (status === 'shipped') {
+      this.isShippingLoading = true;
+    }
     this.httpRequest.updateOrderStatus(this.getSelectedOrder().id, status).subscribe(() => {
+      this.isShippingLoading = false;
       this.toaster.success('Order status updated', 'Done');
       this.getSelectedOrder().status = status;
     }, () => {
+      this.isShippingLoading = false;
       this.toaster.error('Unable to update order status', 'Error :');
+    });
+  }
+
+  validateOrder(shippingInput: HTMLInputElement, taxesInput: HTMLInputElement) {
+    this.isValidationLoading = true;
+    const selectedOrder = this.getSelectedOrder();
+    this.httpRequest.validateOrder(selectedOrder.id, +shippingInput.value, +taxesInput.value).subscribe(() => {
+      this.toaster.success('Order Validated', 'Done');
+      this.isValidationLoading = false;
+      selectedOrder.status = 'validated';
+      selectedOrder.priceTotal = +shippingInput.value + +taxesInput.value + selectedOrder.pricePurchase;
+    }, () => {
+      this.isValidationLoading = false;
+      this.toaster.error('Unable to validate order', 'Error :');
     });
   }
 

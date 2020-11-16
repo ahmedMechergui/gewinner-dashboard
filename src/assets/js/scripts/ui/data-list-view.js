@@ -141,6 +141,9 @@ $(document).on('list-script-loaded', function (event) {
     e.stopPropagation();
     $(".add-new-data").addClass("show");
     $(".overlay-bg").addClass("show");
+    $(".data-items").addClass("ps--scrolling-y","ps","ps--active-y");
+    $(".data-items").addClass("ps--active-y");
+    // $(".data-items").removeClass("ps--scrolling-y");
   });
 
   // On Edit Second pagination , this function fixing
@@ -148,6 +151,8 @@ $(document).on('list-script-loaded', function (event) {
     e.stopPropagation();
     $(".add-new-data").addClass("show");
     $(".overlay-bg").addClass("show");
+    $(".data-items").addClass("ps--scrolling-y","ps","ps--active-y");
+    // $(".data-items").removeClass("ps--scrolling-y");
   });
 
   // On Delete
