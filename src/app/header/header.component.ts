@@ -13,7 +13,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.showDemoToaster();
+    /*=============================
+     Uncomment this on demo version
+     ==============================*/
+    // this.showDemoToaster();
   }
 
   logout() {
