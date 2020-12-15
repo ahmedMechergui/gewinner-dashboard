@@ -101,90 +101,49 @@
               <div class="data-fields px-2">
                 <div class="row">
                   <div class="col-sm-12 data-field-col" *ngIf="ordersArray.length>0">
+
+            <!--=================================
+                        #for voice mode
+                =================================-->
+
                     <div *ngIf="getSelectedOrder().mode === 'voice'">
                       <label class="text-dark text-bold-600 text-large">Wheelchair</label>
-                      <p class="text-62">Brain mode steering system</p>
+                      <p class="text-62">Voice mode steering system</p>
                       <hr>
-                      <p class="text-62">Headset</p>
+                      <p class="text-62">Microphone</p>
                       <hr>
                       <p class="text-62">Electric wheelchair</p>
                       <hr>
-                      <p class="text-62">Mobile application</p>
+                      <p class="text-62">Smart Display</p>
                       <hr>
 
                       <label class="text-dark text-bold-600 text-large">Safety</label>
 
-                      <p class="text-62">Obstacles detection</p>
+                      <p class="text-62">Speaker dependent technology</p>
                       <hr>
 
-                      <div *ngIf="getSelectedOrder().gps">
-                        <p class="text-62">GPS </p>
+                      <div>
+                        <p class="text-62">Geolocation app</p>
                         <hr>
                       </div>
 
-                      <div *ngIf="getSelectedOrder().sms">
-                        <p class="text-62">SMS</p>
-                        <hr>
-                      </div>
 
-                      <div *ngIf="getSelectedOrder().camera">
-                        <p class="text-62">Camera</p>
-                        <hr>
-                      </div>
 
-                      <div *ngIf="getSelectedOrder().notifications">
-                        <p class="text-62">Notifications</p>
-                        <hr>
-                      </div>
 
                       <label class="text-dark text-bold-600 text-large">Accessories</label>
 
-                      <div *ngIf="getSelectedOrder().securityBelt">
+                      <div>
                         <p class="text-62">Security Belt</p>
                         <hr>
                       </div>
 
-                      <div *ngIf="getSelectedOrder().mirror">
-                        <p class="text-62">Rear-View mirror</p>
-                        <hr>
-                      </div>
-
-                      <div *ngIf="getSelectedOrder().camera">
-                        <p class="text-62">Rear-view Camera</p>
-                        <hr>
-                      </div>
-
-                      <div *ngIf="getSelectedOrder().headrest">
+                      <div>
                         <p class="text-62">Headrest Neck Support</p>
                         <hr>
                       </div>
 
-                      <div *ngIf="getSelectedOrder().table">
-                        <p class="text-62">Adjustable table</p>
-                        <hr>
-                      </div>
-
-
-                      <label class="text-dark text-bold-600 text-large">Services</label>
-
-                      <div *ngIf="getSelectedOrder().trainingSession">
-                        <p class="text-62">Training Session : {{getSelectedOrder().trainingHours}} Hours</p>
-                        <hr>
-                      </div>
-
-                      <div *ngIf="getSelectedOrder().control">
-                        <p class="text-62">Quarterly Quality Control
-                          : {{getSelectedOrder().controlYears ? getSelectedOrder().controlYears : getSelectedOrder().controlYearsAdded}}
-                          Years</p>
-                        <hr>
-                      </div>
-
-                      <div *ngIf="getSelectedOrder().demo">
-                        <p class="text-62">Video Demo</p>
-                        <hr>
-                      </div>
-
                     </div>
+
                     <div>
                       <h4 class="text-uppercase">{{getSelectedOrder().clientNature}} data</h4>
                       <hr>
