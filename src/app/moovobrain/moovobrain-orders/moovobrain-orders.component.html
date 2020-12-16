@@ -42,17 +42,37 @@
               </td>
 
               <td class="action-edit" (click)="listItemClicked(i)">
-                <div class="chip chip-warning"
-                     [class.chip-info]="order.status === 'pre-ordered'"
-                     [class.chip-primary]="order.status === 'shipped'"
-                     [class.chip-secondary]="order.status === 'submitted'"
-                     [class.chip-warning]="order.status === 'pending'"
-                     [class.chip-danger]="order.status === 'rejected'"
-                     [class.chip-success]="order.status === 'validated'">
+
+
+
+                <!-- Delete this and replace by the commented part below if you want to handle all status  -->
+                <div class="chip chip-info">
                   <div class="chip-body action-edit">
-                    <div class="chip-text">{{order.status}}</div>
+                    <div class="chip-text">Pre-ordered</div>
                   </div>
                 </div>
+
+                <!--
+                    DO NOT DELETE THE CODE BELOW
+
+                    since we're using pre-orders now all orders are set to pre-ordered
+                    But all code is implemented to handle all status , you just have to
+                    uncomment the code below  and delete the part up (the one with the chip class )
+                -->
+
+<!--                <div class="chip"-->
+<!--                     [class.chip-info]="order.status === 'pre-ordered'"-->
+<!--                     [class.chip-primary]="order.status === 'shipped'"-->
+<!--                     [class.chip-secondary]="order.status === 'submitted'"-->
+<!--                     [class.chip-warning]="order.status === 'pending'"-->
+<!--                     [class.chip-danger]="order.status === 'rejected'"-->
+<!--                     [class.chip-success]="order.status === 'validated'">-->
+<!--                  <div class="chip-body action-edit">-->
+<!--                    <div class="chip-text">{{order.status}}</div>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+
               </td>
 
               <td class="product-action">
