@@ -194,13 +194,22 @@
                 </div>
               </div>
             </div>
-            <div class="add-data-footer d-flex justify-content-around px-3 mt-2" *ngIf="getSelectedOrder().mode === 'voice'">
+
+
+            <!--
+                This part ( confirming orders ) is disabled for now since all we have is pre-order and there is no need for confirming
+                but its code is fully implemented in backend and gewinner website and if you want to make order "confirmable" is
+                to remove the false condition below and changing the email sent in backend to another one that is
+                already written and ready too
+            -->
+            <div class="add-data-footer d-flex justify-content-around px-3 mt-2" *ngIf="false">
               <div class="add-data-btn">
                 <button class="btn btn-success" data-toggle="modal" data-target="#success">Confirm order</button>
               </div>
+
               <!--
                   uncommenting the line below and deleting the "div" under it
-                  will make the sidebar get hidden when button is clicked
+                  will make the sidebar gets hidden when the button is clicked
               -->
               <!--<div class="cancel-data-btn">-->
               <div>
