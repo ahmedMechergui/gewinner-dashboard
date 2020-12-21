@@ -98,7 +98,8 @@ $(document).ready(function () {
     agGrid
       .simpleHttpRequest({
         // url: "http://127.0.0.1:3000/clients"
-        url: "https://gewinner-api.herokuapp.com/clients"
+        // url: "https://gewinner-api.herokuapp.com/clients"
+        url: "http://51.178.220.119:3000/"
       })
       .then(function (data) {
         gridOptions.api.setRowData(data);
