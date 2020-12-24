@@ -30,7 +30,7 @@
                       <form [formGroup]="form" (ngSubmit)="signIn(emailElement,passwordElement)">
                         <fieldset class="form-label-group form-group position-relative has-icon-left">
                           <input type="text" class="form-control" id="user-name" placeholder="Email"
-                                 required value="admin@gmail.com" #emailElement>
+                                 required #emailElement>
                           <div class="form-control-position">
                             <i class="feather icon-user"></i>
                           </div>
@@ -40,7 +40,7 @@
                         <fieldset class="form-label-group position-relative has-icon-left">
                           <input type="password" class="form-control" id="user-password"
                                  placeholder="Password"
-                                 required value="9ar9ouch" #passwordElement>
+                                 required #passwordElement>
                           <div class="form-control-position">
                             <i class="feather icon-lock"></i>
                           </div>
