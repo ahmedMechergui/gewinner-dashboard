@@ -1,5 +1,6 @@
 export interface MoovobrainTest {
   id: string;
+  mode: string;
   name: string;
   clientNature: string;
   email: string;
