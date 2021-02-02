@@ -21,7 +21,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   initForm() {
     this.form = new FormGroup({
       email: new FormControl('demo-admin@gewinner.tn', [Validators.email]),
-      password: new FormControl('admin', [Validators.minLength(8)])
+      password: new FormControl('admin123', [Validators.minLength(8)])
     });
   }
 
