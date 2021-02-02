@@ -13,10 +13,10 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*=============================
-     Uncomment this on demo version
-     ==============================*/
-    // this.showDemoToaster();
+    /*========================================================
+     comment this on production version to remove demo toaster
+     ========================================================*/
+    this.showDemoToaster();
   }
 
   logout() {
@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit {
 
   showDemoToaster(): void {
     // tslint:disable-next-line:max-line-length
-    this.toaster.info('<p>This version is only for <strong>demo</strong> purposes so feel free to perform updates.<br>PS: the dashboard is not yet responsive so do not try it on mobile. Orders confirmation emails, notifications and analytics are not yet implemented</p>', 'Note :', {
+    this.toaster.info('<p>This version is only for <strong>demo</strong> purposes so feel free to perform updates.<br>PS: the dashboard is not yet responsive so do not try it on mobile. Orders confirmation emails, notifications and analytics will not work on demo version</p>', 'Note :', {
       positionClass: 'toast-top-full-width',
       disableTimeOut: true,
       enableHtml: true,

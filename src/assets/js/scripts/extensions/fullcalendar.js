@@ -1,7 +1,7 @@
 $(window).ready(function () {
   // const url = 'http://127.0.0.1:3000/events';
-  // const url = 'https://gewinner-api.herokuapp.com/events';
-  const url = 'https://51.178.220.119:3000/events';
+  const url = 'https://gewinner-api.herokuapp.com/events';
+  // const url = 'https://51.178.220.119:3000/events';
 
   // color object for different event types
   var colors = {
